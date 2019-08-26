@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matazoa - Login</title>
+</head>
+
+<body>
+    <form for="login">
+        <div class="row">
+            <label for="email">E-mail:</label>
+            <input type="email" id="emailInput" required>
+        </div>
+        <div class="row">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senhaInput" required>
+        </div>
+        <div class="row">
+            <label for="opcao">Acesso a perfil de</label> <br/>
+            <input type="radio" name="opcaoLogin" value="pessoa">
+            <label for="pessoa">Pessoa</label>
+            <input type="radio" name="opcaoLogin" value="canil">
+            <label for="canil">Instituição</label>
+        </div>
+    </form>
+    <button id="login">Login</button>
+    <br/>
+    <p>Não tem um perfil ainda?</p>
+    <a href="CadInst.html">Cadastre sua Instituição</a> <br/>
+    <a href="CadPessoa.html">Cadastre seu perfil pessoal</a>
+</body>
+
+</html>
