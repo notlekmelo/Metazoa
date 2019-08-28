@@ -82,12 +82,13 @@
         </div>
         <div class="row">
             <label for="senha">Senha:</label>
-            <input type="password" name="senhaCanil" minlength="6" maxlength="12" required>
+            <input type="password" name="senhaCanil" id="senhaCanil" minlength="6" maxlength="12" required>
         </div>
         <div class="row">
             <label for="confirmação">Confirme sua senha: </label>
-            <input type="password" name="confirmaSenha" required>
+            <input type="password" name="confirmaSenha" id="confirmaSenha" required onkeyup="VerificaSenha()">
         </div>
+        <p id="comparaSenhas"></p>
         <div class="row">
             <label for="banco">Deseja que os outros usuários possam visualizar sua conta bancária para contribuírem com
                 sua instituição?</label>
@@ -108,6 +109,17 @@
     </form>
 
 <script type="text/javascript">
+
+function VerificaSenha(){
+    let senha  = document.getElementById("senhaCanil").value;
+    let confirma = document.getElementById("confirmaSenha").value;
+    if(senha === confirma){
+        document.getElementById("comparaSenhas").innerText = " ";
+    }
+    else{
+        document.getElementById("comparaSenhas").innerText = "As senhas não coincidem."
+    }
+}
 
 function MostraCampo(){
     document.getElementById("banco").removeAttribute("style");

@@ -60,9 +60,9 @@ class Instituicao extends Pessoa{
     
 }
 
-
-$canil = new Instituicao($_POST["nomeCanil"],$_POST["telCanil"],$_POST["emailCanil"],$_POST["estado"],$_POST["senhaCanil"],$_POST["cidadeCanil"],$_POST["ruaCanil"],$_POST["numeroCanil"]." - ".$_POST["complemento"],$_POST["bairroCanil"],$_POST["cnpjCanil"],$_POST["bancoInput"]." ".$_POST["agenciaInput"]."/".$_POST["contaInput"]);
-$bd = new BancoDados();
-$bd->inserirCanil($canil);
-header('Location: ../Pages/login.html'); 
+    $canil = new Instituicao($_POST["nomeCanil"],$_POST["telCanil"],$_POST["emailCanil"],$_POST["estado"],$_POST["senhaCanil"],$_POST["cidadeCanil"],$_POST["ruaCanil"],$_POST["numeroCanil"]." - ".$_POST["complemento"],$_POST["bairroCanil"],$_POST["cnpjCanil"],$_POST["bancoInput"]." ".$_POST["agenciaInput"]."/".$_POST["contaInput"]);
+    $bd = new BancoDados();
+    $bd->inserirCanil($canil);
+    header('Location: ../Pages/login.html'); 
+}
 ?>
