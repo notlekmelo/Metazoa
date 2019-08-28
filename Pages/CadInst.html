@@ -113,7 +113,7 @@
 function VerificaSenha(){
     let senha  = document.getElementById("senhaCanil").value;
     let confirma = document.getElementById("confirmaSenha").value;
-    if(senha === confirma){
+    if(senha === confirma || confirma === ""){
         document.getElementById("comparaSenhas").innerText = " ";
     }
     else{

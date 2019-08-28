@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Metazoa | Cadastro de Pessoa</title>
 </head>
+
 <body>
     <h1>Cadastro de Pessoa</h1>
     <h2>Favor preencher as informações abaixo:</h2>
@@ -48,79 +50,54 @@
         </div>
         <div class="row">
             <label for="cidade">Cidade:</label>
-            <input type="text" name="cidadeCanil" required>
+            <input type="text" name="cidadePessoa" required>
         </div>
         <div class="row">
             <label for="rua">Rua:</label>
-            <input type="text" name="ruaCanil" required>
+            <input type="text" name="rua" required>
             <label for="numeroCasa">Nº:</label>
-            <input type="number" name="numeroCanil" required>
+            <input type="number" name="numeroCasa" required>
             <label for="complemento">Complemento</label>
             <input type="number" name="complemento">
         </div>
         <div class="row">
             <label for="bairro">Bairro</label>
-            <input type="text" name="bairroCanil" required>
+            <input type="text" name="bairro" required>
         </div>
         <div class="row">
             <label for="telefone">Telefone para contato:</label>
-            <input type="number" name="telCanil" minlength="10" maxlength="11" required>
+            <input type="number" name="telefone" minlength="10" maxlength="11" required>
         </div>
         <div class="row">
             <!-- Aqui devo adicionar que o email séra necessário para login -->
             <label for="email">E-mail:</label>
-            <input type="email" name="emailCanil" required>
+            <input type="email" name="email" required>
         </div>
         <div class="row">
             <label for="senha">Senha:</label>
-            <input type="password" name="senhaCanil" minlength="6" maxlength="12" required>
+            <input type="password" id="senha" name="senha" minlength="6" maxlength="12" required>
         </div>
         <div class="row">
             <label for="confirmação">Confirme sua senha: </label>
-            <input type="password" name="confirmaSenha" required>
+            <input type="password" id="confirmaSenha" name="confirmaSenha" required onkeyup=VerificaSenha()>
         </div>
-        <div class="row">
-            <label for="banco">Deseja que os outros usuários possam visualizar sua conta bancária para contribuírem com
-                sua instituição?</label>
-            <br />
-            <input type="radio" name="opcaoConta" value="sim" onclick="MostraCampo()">
-            <label for="sim">Sim</label>
-            <input type="radio" name="opcaoConta" valeu="nao" onclick="EscondeCampo()">
-            <label for="nao">Não</label>
-            <label for="Banco" id="banco" style="display: none">Banco:</label>
-            <input type="text" name="bancoInput" id="bancoInput" style="display: none">
-            <label for="Agencia" id="agencia" style="display: none">Agência</label>
-            <input type="text" name="agenciaInput" id="agenciaInput" style="display: none">
-            <label for="conta" id="conta" style="display: none">Nº da Conta: </label>
-            <input type="text" name="contaInput" id="contaInput" style="display: none">
-
-        </div>
+        <p id="comparaSenhas"></p>
         <input type="submit" value="Enviar">
     </form>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-function MostraCampo(){
-    document.getElementById("banco").removeAttribute("style");
-    document.getElementById("bancoInput").removeAttribute("style");
-    document.getElementById("agencia").removeAttribute("style");
-    document.getElementById("agenciaInput").removeAttribute("style");
-    document.getElementById("conta").removeAttribute("style");
-    document.getElementById("contaInput").removeAttribute("style");
-}
-
-function EscondeCampo(){
-    document.getElementById("banco").setAttribute("style","display:none");
-    document.getElementById("bancoInput").setAttribute("style","display:none");
-    document.getElementById("agencia").setAttribute("style","display:none");
-    document.getElementById("agenciaInput").setAttribute("style","display:none");
-    document.getElementById("conta").setAttribute("style","display:none");
-    document.getElementById("contaInput").setAttribute("style","display:none");
-
-}
-
-</script>
-
+        function VerificaSenha() {
+            let senha = document.querySelector('#senha').value;
+            let confirma = document.querySelector('#confirmaSenha').value;
+            if (senha === confirma || confirma === "") {
+                document.getElementById("comparaSenhas").innerText = " ";
+            }
+            else {
+                document.getElementById("comparaSenhas").innerText = "As senhas não coincidem."
+            }
+        }
+    </script>
 </body>
 
 </html>
