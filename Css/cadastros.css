@@ -1,0 +1,27 @@
+:root {
+  --cor-padrao: rgb(0, 163, 109);
+}
+
+input,
+select {
+  border: 1px solid var(--cor-padrao);
+  border-radius: 4px;
+  background: none;
+  color: var(--cor-padrao);
+}
+
+#enviar {
+  padding: 5px;
+  color: var(--cor-padrao);
+  background: none;
+}
+
+#enviar:hover {
+  color: white;
+  background: var(--cor-padrao);
+  transition: all 0.2s;
+}
+
+p {
+  color: var(--cor-padrao);
+}
