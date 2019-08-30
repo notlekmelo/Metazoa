@@ -34,7 +34,7 @@ class BancoDados
             $this->disconnect();
             return $this->result;
         } else {
-            echo "Ocorreu um erro na execução da SQL";
+            echo "Não foi possível cadastrar a Instituição";
             echo "Erro :" . mysqli_error($this->link);
             echo "SQL: " . $this->query;
             die();
@@ -58,8 +58,22 @@ class BancoDados
         }
     }
 
-    function disconnect()
-    {
-        return mysqli_close($this->link);
+    function login($email,$senha,$tipo){
+        $this->connect();
+        $this->query = "SELECT * from ".$tipo." where Email = '".$email."' and Senha = '".$senha."';";
+        if ($this->result = mysqli_query($this->link, $this->query)) {
+            $this->disconnect();
+            return $this->result;
+        } else {
+            echo "Erro ao fazer login";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
     }
-}
+
+        function disconnect(){
+            return mysqli_close($this->link);
+        }
+    }
