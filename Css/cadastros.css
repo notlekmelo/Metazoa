@@ -1,5 +1,6 @@
 :root {
   --cor-padrao: rgb(102, 102, 240);
+  --cor-second: rgb(190, 46, 159);
 }
 
 html,
@@ -16,16 +17,20 @@ body {
 }
 
 .container {
-  background-color: white;
-  border: 2px solid var(--cor-padrao);
-  border-radius: 10px;
-  margin: auto 33%;
-  padding: 1%;
+  min-width: 500px;
   text-align: center;
+  background-color: white;
+  border: 1px solid var(--cor-padrao);
+  border-radius: 15px;
+  margin: 0 auto;
+  padding: 1%;
+  max-width: 500px;
 }
 
-form {
-  margin-top: 5%;
+#grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-top: 4%;
 }
 
 .row {
@@ -33,17 +38,16 @@ form {
   justify-content: center;
   align-content: center;
   margin: 2%;
-  display: flex;
-  justify-content: space-between;
 }
 
-.row-cont {
-  margin-top: 5%;
+.row-conta {
+  margin-top: 4%;
   display: flex;
   justify-content: center;
 }
 
 .row-opt {
+  font-weight: bold;
   display: flex;
   justify-content: space-around;
   margin-top: 3%;
@@ -55,33 +59,55 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .row input,
 select {
-  width: 50%;
-  margin: 0 2%;
-  border: 1px solid var(--cor-padrao);
-  border-radius: 4px;
+  width: 100%;
+  padding: 3%;
+  border: 2px solid var(--cor-padrao);
+  border-radius: 15px;
   background: none;
-  color: var(--cor-padrao);
+  color: black;
+}
+
+select:invalid {
+  color: #757575;
+}
+
+input::placeholder {
+  color: #757575;
+}
+
+.row-end {
+  margin: 2% 1%;
+}
+
+.row-end input {
+  padding: 1.5%;
+}
+
+.row-top {
+  margin-top: 5%;
 }
 
 #submit {
-  margin-top: 2%;
+  margin: 3% 1% 0 1%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 #enviar {
+  font-weight: 550;
+  width: 100%;
+  font-size: 15px;
   border: 1px solid var(--cor-padrao);
-  border-radius: 4px;
-  padding: 1% 4%;
+  border-radius: 15px;
+  padding: 1.5%;
   color: white;
   background: var(--cor-padrao);
 }
 
 #enviar:hover {
   cursor: pointer;
-  color: var(--cor-padrao);
-  background: none;
-  border: 1px solid var(--cor-padrao);
+  background: var(--cor-second);
+  border: 1px solid var(--cor-second);
   transition: all 0.2s;
 }
 
