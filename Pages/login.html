@@ -5,31 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matazoa - Login</title>
+    <link rel="stylesheet" href="../Css/principal.css">
+    <link rel="stylesheet" href="../Css/formularios.css">
 </head>
 
 <body>
-    <form for="login" method="POST" action="../Backend/login.php" autocomplete="off">
-        <div class="row">
-            <label for="email">E-mail:</label>
-            <input type="email" id="emailInput"  name="emailInput" required>
+    <div id="corpo">
+        <div class="container login">
+            <div class="row">
+                <h2>Login</h2>
+            </div>
+            <form for="login" method="POST" action="../Backend/login.php" autocomplete="off">
+                <div class="row row-end row-top">
+                    <input type="email" placeholder="Email" id="emailInput" name="emailInput" required>
+                </div>
+                <div class="row row-end row-top">
+                    <input type="password" placeholder="Senha" id="senhaInput" name="senhaInput" required>
+                </div>
+
+                <div class="row-opt block-opt">
+                    <div>
+                        <label for="opcao">Acessar perfil de:</label>
+                    </div>
+                    <div class="item-opt">
+                        <input type="radio" name="opcaoLogin" value="pessoa">
+                        <label for="pessoa">Pessoa</label>
+                    </div>
+                    <div class="item-opt">
+                        <input type="radio" name="opcaoLogin" value="Instituicao">
+                        <label for="canil">Instituição</label>
+                    </div>
+                </div>
+                <div id="submit">
+                    <input id="enviar" type="submit" value="Entrar">
+                </div>
+            </form>
+            <br />
+            <div class="row">
+                <label>Não tem um perfil ainda?</label>
+            </div>
+            <div class="row-opt">
+                <div class="item-opt space-top">
+                    <a href="CadInst.html">Cadastre sua Instituição</a> <br />
+                </div>
+                <div class="item-opt space-top">
+                    <a href="CadPes.html">Cadastre seu perfil pessoal</a>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <label for="senha">Senha:</label>
-            <input type="password" id="senhaInput"  name="senhaInput" required>
-        </div>
-        <div class="row">
-            <label for="opcao">Acesso a perfil de</label> <br/>
-            <input type="radio" name="opcaoLogin" value="pessoa">
-            <label for="pessoa">Pessoa</label>
-            <input type="radio" name="opcaoLogin" value="Instituicao">
-            <label for="canil">Instituição</label>
-        </div>
-        <input type="submit" value="Enviar">
-    </form>
-    <br/>
-    <p>Não tem um perfil ainda?</p>
-    <a href="CadInst.html">Cadastre sua Instituição</a> <br/>
-    <a href="CadPessoa.html">Cadastre seu perfil pessoal</a>
+    </div>
 </body>
 
 </html>
