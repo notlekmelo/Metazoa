@@ -1,8 +1,5 @@
-:root {
-  --cor-padrao: rgb(102, 102, 240);
-  --cor-second: rgb(190, 46, 159);
-  --cor-efeito: rgba(102, 102, 240, 0.233);
-}
+@import url(principal.css);
+@import url(menu.css);
 
 html,
 body {
@@ -14,11 +11,12 @@ body {
   height: 100%;
   align-items: center;
   margin: auto;
+  margin-left: 10%;
   display: flex;
 }
 
 .container {
-  min-width: 41%;
+  min-width: 45%;
   text-align: center;
   background-color: white;
   border: 1px solid white;
@@ -30,7 +28,7 @@ body {
 }
 
 .login {
-  min-width: 37%;
+  min-width: 41%;
   padding: 1.5% 2% 3% 2%;
 }
 
@@ -80,9 +78,7 @@ select {
   color: black;
 }
 
-.row input:hover,
-select:hover,
-input:focus,
+.row input:focus,
 select:focus {
   border: 2px solid var(--cor-second);
 }
