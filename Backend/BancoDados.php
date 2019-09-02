@@ -61,13 +61,12 @@ class BancoDados
     function login($email,$senha,$tipo){
         $this->connect();
         $this->query = "SELECT * from ".$tipo." where Email = '".$email."' and Senha = '".$senha."';";
-        if ($this->result = mysqli_query($this->link, $this->query)) {
+        $this->result = mysqli_query($this->link, $this->query);
+        if ($this->result->num_rows == 1) {
             $this->disconnect();
-            return $this->result;
+            return true;
         } else {
-            echo "Erro ao fazer login";
-            echo "Erro :" . mysqli_error($this->link);
-            echo "SQL: " . $this->query;
+            return false;
             die();
             disconnect();
         }
