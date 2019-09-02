@@ -29,7 +29,7 @@ class BancoDados
     function inserirCanil($canil)
     {
         $this->connect();
-        $this->query = "insert into Instituicao (Nome,CNPJ,Conta,Email,Senha,Telefone,Estado,Cidade,Rua,Bairro) values ('" . $canil->getNome() . "','" . $canil->getCnpj() . "','" . $canil->getConta() . "','" . $canil->getEmail() . "','" . $canil->getSenha() . "','" . $canil->getTel() . "','" . $canil->getEstado() . "','" . $canil->getCidade() . "','" . $canil->getRua() . "' - '" . $canil->getNumero() . "','" . $canil->getBairro() . "')";
+        $this->query = "insert into Instituicao (Nome,CNPJ,Conta,Email,Senha,Telefone,Estado,Cidade,Rua,Bairro) values ('" . $canil->getNome() . "','" . $canil->getCnpj() . "','" . $canil->getConta() . "','" . $canil->getEmail() . "','" . $canil->getSenha() . "','" . $canil->getTel() . "','" . $canil->getEstado() . "','" . $canil->getCidade() . "','" . $canil->getRua() . " - " . $canil->getNumero() . "','" . $canil->getBairro() . "')";
         if ($this->result = mysqli_query($this->link, $this->query)) {
             $this->disconnect();
             return $this->result;
@@ -45,7 +45,7 @@ class BancoDados
     function inserirPessoa($person)
     {
         $this->connect();
-        $this->query = "insert into Pessoa (Nome,Email,Senha,Telefone,Estado,Cidade,Rua,Bairro) values ('" . $person->getNome() . "','" . $person->getEmail() . "','" . $person->getSenha() . "','" . $person->getTel() . "','" . $person->getEstado() . "','" . $person->getCidade() . "','" . $person->getRua() . "' - '" . $person->getNumero() . "','" . $person->getBairro() . "')";
+        $this->query = "insert into Pessoa (Nome,Email,Senha,Telefone,Estado,Cidade,Rua,Bairro) values ('" . $person->getNome() . "','" . $person->getEmail() . "','" . $person->getSenha() . "','" . $person->getTel() . "','" . $person->getEstado() . "','" . $person->getCidade() . "','" . $person->getRua() . " - " . $person->getNumero(). "','" . $person->getBairro() . "')";
         if ($this->result = mysqli_query($this->link, $this->query)) {
             $this->disconnect();
             return $this->result;
