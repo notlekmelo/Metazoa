@@ -5,7 +5,8 @@ session_start();
 $bd = new BancoDados();
 if($bd->login($_POST["emailInput"],$_POST["senhaInput"],$_POST["opcaoLogin"])){
     $_SESSION['logado'] = $_POST["emailInput"];
-    header('Location: ../Pages/feed.html');
+    $_SESSION['tipo'] = $_POST["opcaoLogin"];
+    header('Location: ../Pages/feed.php');
 }
 else{
     header('Location: ../Pages/login.html');

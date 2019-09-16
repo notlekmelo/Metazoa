@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li>
-                <a href="perfil.html">
+                <a href="perfil.php">
                     <img src="../Imagens/face.png">
                     <span>Perfil</span>
                 </a>
@@ -53,6 +53,24 @@
         </div>
     </div>
     <div id="corpo">
+        <?php
+            require_once "../Backend/BancoDados.php";
+            $bd = new BancoDados();
+
+            session_start();
+            $nome = $bd->getColumn($_SESSION['logado'],$_SESSION['tipo'],"Nome");
+            echo  "Bem vindo " . $nome . "<br/>";
+
+           $lista = $bd->getAllState($bd->getColumn($_SESSION['logado'],$_SESSION['tipo'],"Estado"));
+           $tam = count($lista);
+           while($tam > -1){
+            if(array_key_exists($tam, $lista))
+            {
+                echo $lista[$tam]['Nome'] . "<br/>";
+            }
+            $tam = $tam -1;
+           }
+        ?>
 
     </div>
 

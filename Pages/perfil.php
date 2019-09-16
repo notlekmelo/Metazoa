@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li>
-                <a href="feed.html">
+                <a href="feed.php">
                     <img src="../Imagens/pet.png">
                     <span>Feed</span>
                 </a>
@@ -53,8 +53,34 @@
         </div>
     </div>
     <div id="corpo">
+    <?php
+            require_once "../Backend/BancoDados.php";
+            $bd = new BancoDados();
+            session_start();
 
+            $perfil = $bd->getAllInfo($_SESSION['logado'],$_SESSION['tipo']);
+            echo $perfil['Nome'] ."<br/>". $perfil['Email'] ."<br/>". $perfil['Telefone'] ."<br/>". $perfil['Rua'] ."<br/>" .$perfil['Bairro'] ."<br/>". $perfil['Cidade'] ."<br/>" . $perfil['Estado'] ."<br/>" ; 
+            if($_SESSION['tipo'] === "instituicao"){
+                echo $perfil['CNPJ'] ."<br/>" .$perfil['Conta'];
+            }
+        ?>
+        <button onclick="MostraCampo()">Alterar valores</button>
+        <form action="../Backend/Cadastro.php" method="POST" autocomplete="off">
+            <input id="campoInput" type="text" placeholder="Campo a ser alterado" name="campoInput"  style="display:none;" required>
+            <input id="valorInput" type="text" placeholder="Novo valor" name="valorInput" style="display:none;" required>
+            <input id="buttonSubmit" type="submit" value="Confirmar" style="display:none;">
+        </form>
+    <h1>Seus animais: </h1>
     </div>
+    <script type="text/javascript">
+
+        function MostraCampo() {
+            document.getElementById("campoInput").removeAttribute("style");
+            document.getElementById("valorInput").removeAttribute("style");
+            document.getElementById("buttonSubmit").removeAttribute("style");
+
+        }
+        </script>
 </body>
 
 </html>

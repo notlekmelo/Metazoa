@@ -72,7 +72,57 @@ class BancoDados
         }
     }
 
-        function disconnect(){
-            return mysqli_close($this->link);
+    function getColumn($email,$tabela,$coluna){
+        $this->connect();
+        $this->query = "SELECT ".$coluna." from ".$tabela." where Email = '".$email."';";
+        $this->result = mysqli_query($this->link, $this->query);
+        $resposta = mysqli_fetch_assoc($this->result);
+        $this->disconnect();
+        return $resposta[$coluna];
+        }
+
+    function getAllInfo($email,$tabela){
+        $this->connect();
+        $this->query = "SELECT * from ".$tabela." where Email = '".$email."';";
+        $this->result = mysqli_query($this->link, $this->query);
+        $resposta = mysqli_fetch_assoc($this->result);
+        $this->disconnect();
+        return $resposta;
+        }
+
+
+        // Essa função deve ser apromorada com join que só pega os animais cujos donos atuais estão em seu estado.
+    function getAllState($estado){
+        $this->connect();
+        $this->query = "SELECT * from pessoa where Estado = '".$estado."';";
+        $this->result = mysqli_query($this->link, $this->query);
+        $total = mysqli_num_rows($this->result);
+        $lista = array();
+        while($total > 0){
+            array_push($lista, mysqli_fetch_assoc($this->result));
+            $total = $total - 1;
+        }
+        $this->disconnect();
+        return $lista;
+    }
+
+    function updateCampo($tabela,$campo,$valor,$email){
+        $this->connect();
+        $this->query = "Update ".$tabela." SET ".$campo." = '".$valor."' where Email = '".$email."';";
+        if($this->result = mysqli_query($this->link, $this->query)){
+            $this->disconnect();
+        }
+        else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
         }
     }
+
+    function disconnect(){
+        return mysqli_close($this->link);
+        }
+}
+?>
