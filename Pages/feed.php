@@ -53,25 +53,25 @@
         </div>
     </div>
     <div id="corpo">
-        <?php
+        <div id="container">
+            <?php
             require_once "../Backend/BancoDados.php";
             $bd = new BancoDados();
 
             session_start();
-            $nome = $bd->getColumn($_SESSION['logado'],$_SESSION['tipo'],"Nome");
-            echo  "Bem vindo " . $nome . "<br/>";
+            $nome = $bd->getColumn($_SESSION['logado'], $_SESSION['tipo'], "Nome");
+            echo  "Bem vindo " . $nome . "<br/><br/>";
 
-           $lista = $bd->getAllState($bd->getColumn($_SESSION['logado'],$_SESSION['tipo'],"Estado"));
-           $tam = count($lista);
-           while($tam > -1){
-            if(array_key_exists($tam, $lista))
-            {
-                echo $lista[$tam]['Nome'] . "<br/>";
+            $lista = $bd->getAllState($bd->getColumn($_SESSION['logado'], $_SESSION['tipo'], "Estado"));
+            $tam = count($lista);
+            while ($tam > -1) {
+                if (array_key_exists($tam, $lista)) {
+                    echo $lista[$tam]['Nome'] . "<hr/>";
+                }
+                $tam = $tam - 1;
             }
-            $tam = $tam -1;
-           }
-        ?>
-
+            ?>
+        </div>
     </div>
 
 </body>
