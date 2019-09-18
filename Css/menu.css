@@ -10,20 +10,19 @@
   box-shadow: 1px 0px 8px 1px rgb(77, 76, 76);
 }
 
-#logo {
+#logo a {
   display: flex;
   justify-content: center;
-  margin-top: 30%;
+  margin-top: 20%;
+  margin-bottom: 5%;
 }
 
-#logo span {
-  color: black;
-  font-weight: bold;
-  font-size: 20px;
+#logo img {
+  width: 90%;
 }
 
 ul {
-  height: 82%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

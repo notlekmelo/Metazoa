@@ -13,7 +13,9 @@
     <div id="menu">
 
         <div id="logo">
-            <span>[logotipo]</span>
+            <a href="../index.html">
+                <img src="../Imagens/logo.png">
+            </a>
         </div>
 
         <ul>
