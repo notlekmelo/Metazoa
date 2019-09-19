@@ -121,8 +121,24 @@ class BancoDados
         }
     }
 
+    function excluir($email,$tabela){
+        $this->connect();
+        $this->query = "Delete from ".$tabela." where Email = '".$email."';";
+        if($this->result = mysqli_query($this->link, $this->query)){
+            $this->disconnect();
+        }
+        else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
     function disconnect(){
         return mysqli_close($this->link);
         }
+
 }
 ?>

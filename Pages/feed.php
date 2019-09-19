@@ -56,7 +56,7 @@
     </div>
     <div id="corpo">
         <div id="container">
-            <?php
+        <?php
             require_once "../Backend/BancoDados.php";
             $bd = new BancoDados();
 
