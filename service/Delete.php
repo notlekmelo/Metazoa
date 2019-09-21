@@ -1,10 +1,10 @@
 <?php
-require_once "Pessoa.php";
-require_once "Instituicao.php";
-require_once "BancoDados.php";
+require_once "../model/Pessoa.php";
+require_once "../model/Instituicao.php";
+require_once "../repository/Database.php";
 session_start();
 
-$bd = new BancoDados();
+$bd = new Database();
 
 if(isset($_POST['exclusaoUsuario'])){
     if($bd->login($email,$_POST['exclusaoUsuario'],$_SESSION['tipo'])){
@@ -12,8 +12,6 @@ if(isset($_POST['exclusaoUsuario'])){
         header('Location: ../index.html');
     }
     else {
-        header('Location: ../Pages/Perfil.php');
+        header('Location: ../view/page/perfil.php');
     }
 }
-
-?>

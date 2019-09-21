@@ -5,26 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matazoa | Login</title>
-    <link rel="stylesheet" href="../Css/formularios.css">
+    <link rel="stylesheet" href="../style/form.css">
 </head>
 
 <body>
     <div id="menu">
 
         <div id="logo">
-            <a href="../index.html">
-                <img src="../Imagens/logo.png">
+            <a href="../../index.html">
+                <img src="../image/logo.png">
             </a>
         </div>
 
-        <ul>
-            <li>
-                <a href="../index.html">
-                    <img src="../Imagens/home.png">
-                    <span>Home</span>
-                </a>
-            </li>
-        </ul>
         <div id="footer">
             <p>Todos os direitos reservados ® 2019.</p>
         </div>
@@ -34,7 +26,7 @@
             <div class="row">
                 <h2>Login</h2>
             </div>
-            <form for="login" method="POST" action="../Backend/login.php" autocomplete="off">
+            <form for="login" method="POST" action="../../service/Authenticate.php" autocomplete="off">
                 <div class="row row-end row-top">
                     <input type="email" placeholder="Email" id="emailInput" name="emailInput" required>
                 </div>
@@ -65,10 +57,10 @@
             </div>
             <div class="row-opt">
                 <div class="item-opt space-top">
-                    <a href="CadInst.html">Cadastre sua Instituição</a> <br />
+                    <a href="cadastro-instituicao.html">Cadastre sua Instituição</a> <br />
                 </div>
                 <div class="item-opt space-top">
-                    <a href="CadPes.html">Cadastre seu perfil pessoal</a>
+                    <a href="cadastro-pessoa.html">Cadastre seu perfil pessoal</a>
                 </div>
             </div>
         </div>

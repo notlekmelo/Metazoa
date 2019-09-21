@@ -6,46 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Metazoa | Feed</title>
-    <link rel="stylesheet" href="../Css/feed.css">
+    <link rel="stylesheet" href="../style/main.css">
 </head>
 
 <body>
     <div id="menu">
 
         <div id="logo">
-            <a href="../index.html">
-                <img src="../Imagens/logo.png">
+            <a href="../../index.html">
+                <img src="../image/logo.png">
             </a>
         </div>
 
         <ul>
             <li>
-                <a href="../index.html">
-                    <img src="../Imagens/home.png">
-                    <span>Home</span>
-                </a>
-            </li>
-            <li>
                 <a href="#" selected>
-                    <img src="../Imagens/pet.png">
+                    <img src="../image/pet.png">
                     <span>Feed</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="../Imagens/mundo.png">
+                    <img src="../image/mundo.png">
                     <span>Explorar</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <img src="../Imagens/email.png">
+                    <img src="../image/email.png">
                     <span>Convites</span>
                 </a>
             </li>
             <li>
                 <a href="perfil.php">
-                    <img src="../Imagens/face.png">
+                    <img src="../image/face.png">
                     <span>Perfil</span>
                 </a>
             </li>
@@ -56,9 +50,9 @@
     </div>
     <div id="corpo">
         <div id="container">
-        <?php
-            require_once "../Backend/BancoDados.php";
-            $bd = new BancoDados();
+            <?php
+            require_once "../../repository/Database.php";
+            $bd = new Database();
 
             session_start();
             $nome = $bd->getColumn($_SESSION['logado'], $_SESSION['tipo'], "Nome");

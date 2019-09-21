@@ -1,5 +1,5 @@
 <?php
-class BancoDados
+class Database
 {
     var $host = "localhost:3306";
     var $user = "root";
@@ -141,4 +141,3 @@ class BancoDados
         }
 
 }
-?>

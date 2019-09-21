@@ -6,28 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Metazoa | Cadastro de Pessoa</title>
-    <link rel="stylesheet" href="../Css/formularios.css">
+    <link rel="stylesheet" href="../style/form.css">
 </head>
 
 <body>
     <div id="menu">
 
         <div id="logo">
-            <a href="../index.html">
-                <img src="../Imagens/logo.png">
+            <a href="../../index.html">
+                <img src="../image/logo.png">
             </a>
         </div>
 
         <ul>
             <li>
-                <a href="../index.html">
-                    <img src="../Imagens/home.png">
-                    <span>Home</span>
-                </a>
-            </li>
-            <li>
                 <a href="login.html">
-                    <img src="../Imagens/auth.png">
+                    <img src="../image/auth.png">
                     <span>Entrar</span>
                 </a>
             </li>
@@ -39,7 +33,7 @@
     <div id="corpo">
         <div class="container">
             <h2>Cadastro de Pessoa</h2>
-            <form id="dadosCanil" action="../Backend/Cadastro.php" method="POST" autocomplete="off">
+            <form id="dadosCanil" action="../../service/Register.php" method="POST" autocomplete="off">
                 <div class="row row-end row-top">
                     <input placeholder="Nome Completo" type="text" name="nomePessoa" required>
                 </div>
