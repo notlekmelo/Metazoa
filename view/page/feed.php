@@ -38,7 +38,7 @@
                 </a>
             </li>
             <li>
-                <a href="perfil.php">
+                <a href="perfil.html">
                     <img src="../image/face.png">
                     <span>Perfil</span>
                 </a>

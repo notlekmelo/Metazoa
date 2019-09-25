@@ -9,6 +9,17 @@
 </head>
 
 <body>
+    <script type="text/javascript">
+        function salvarStorage() {
+            sessionStorage.setItem("email", document.getElementById("emailInput").value);
+            var radiobutton = document.getElementsByName("opcaoLogin");
+            if (radiobutton[0].checked) {
+                sessionStorage.setItem("tipo", "pessoa");
+            else {
+                    sessionStorage.setItem("tipo", "instituicao");
+                }
+            }
+    </script>
     <div id="menu">
 
         <div id="logo">
@@ -48,7 +59,7 @@
                     </div>
                 </div>
                 <div id="submit">
-                    <input id="enviar" type="submit" value="Entrar">
+                    <input id="enviar" type="submit" onclick="salvarStorage()" value="Entrar">
                 </div>
             </form>
             <br />
