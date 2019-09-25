@@ -7,9 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Metazoa | Meu Perfil</title>
     <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body onload="listar()">
+<body onload="carregarUsuario()">
     <div id="menu">
 
         <div id="logo">
@@ -50,6 +52,7 @@
     </div>
     <div id="corpo">
         <div id="container">
+            <ul id="dadosUser" class="list-group"></ul>
             <button id="btnAlt" class="btn" onclick="MostraCampo()">Alterar valores</button>
             <button id="btnExc" onclick="excluir()">Excluir conta</button>
             <form action="../../service/Register.php" method="POST" autocomplete="off">
@@ -83,20 +86,32 @@
 
     <script type="text/javascript">
 
-        function listar() {
+        function carregarUsuario() {
 
-            axios.get('../../service/Get.php?pessoa_id="keltonmof@gmail.com"')
-                .then(function (response) {
-                    alert("dem bom");
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    alert("deu ruim");
+            let tipo = sessionStorage.getItem("tipo");
+            let email = sessionStorage.getItem("email");
+
+            axios.get(`../../service/Get.php?${tipo}_id=${email}`)
+                .then(response => mostrarDados(response.data))
+                .catch(error => {
+                    alert("Erro ao carregar dados de usuário");
                     console.log(error);
-                })
-                .finally(function () {
                 });
         }
+
+        function mostrarDados(usuario) {
+            var lista = document.querySelector("#dadosUser");
+
+            var valoresUsuario = Object.values(usuario);
+
+            valoresUsuario.forEach(elemento => {
+                var item = document.createElement("li");
+                item.className = "list-group-item";
+                item.innerHTML = elemento;
+                lista.appendChild(item);
+            });
+        }
+
         function MostraCampo() {
             document.getElementById("campoInput").removeAttribute("style");
             document.getElementById("valorInput").removeAttribute("style");
