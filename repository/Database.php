@@ -24,6 +24,7 @@ class Database
             echo "Erro: " . mysqli_error($this->link);
             die();
         }
+        return $this->link;
     }
 
     function inserirCanil($canil)
