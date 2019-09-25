@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../style/main.css">
 </head>
 
-<body>
+<body onload="listar()">
     <div id="menu">
 
         <div id="logo">
@@ -50,25 +50,16 @@
     </div>
     <div id="corpo">
         <div id="container">
-            <?php
-            require_once "../../repository/Database.php";
-            $bd = new Database();
-            session_start();
-
-            $perfil = $bd->getAllInfo($_SESSION['logado'], $_SESSION['tipo']);
-            echo $perfil['Nome'] . "<hr/>" . $perfil['Email'] . "<hr/>" . $perfil['Telefone'] . "<hr/>" . $perfil['Rua'] . "<hr/>" . $perfil['Bairro'] . "<hr/>" . $perfil['Cidade'] . "<hr/>" . $perfil['Estado'] . "<hr/>";
-            if ($_SESSION['tipo'] === "Instituicao") {
-                echo $perfil['CNPJ'] . "<hr/>" . $perfil['Conta'] . "<hr/>";
-            }
-            ?>
             <button id="btnAlt" class="btn" onclick="MostraCampo()">Alterar valores</button>
             <button id="btnExc" onclick="excluir()">Excluir conta</button>
             <form action="../../service/Register.php" method="POST" autocomplete="off">
                 <div class="row">
-                    <input id="campoInput" type="text" placeholder="Campo a ser alterado" name="alteracaoUsuario" style="display:none;" required>
+                    <input id="campoInput" type="text" placeholder="Campo a ser alterado" name="alteracaoUsuario"
+                        style="display:none;" required>
                 </div>
                 <div class="row">
-                    <input id="valorInput" type="text" placeholder="Novo valor" name="valorInput" style="display:none;" required>
+                    <input id="valorInput" type="text" placeholder="Novo valor" name="valorInput" style="display:none;"
+                        required>
                 </div>
                 <div class="row">
                     <input id="buttonSubmit" class="btn" type="submit" value="Confirmar" style="display:none;">
@@ -76,7 +67,8 @@
             </form>
             <form action="../Backend/Exclusao.php" method="POST" autocomplete="off">
                 <div class="row">
-                    <input id="exclusaoUsuario" type="password" placeholder="Para excluir sa conta, digite sua senha" name="exclusaoUsuario" style="display:none;" required>
+                    <input id="exclusaoUsuario" type="password" placeholder="Para excluir sa conta, digite sua senha"
+                        name="exclusaoUsuario" style="display:none;" required>
                 </div>
                 <div class="row">
                     <input id="submitExc" class="btn" type="submit" value="Confirmar" style="display:none;">
@@ -86,7 +78,25 @@
             <h2>Seus animais: </h2>
         </div>
     </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script type="text/javascript">
+
+        function listar() {
+
+            axios.get('../../service/Get.php?pessoa_id="keltonmof@gmail.com"')
+                .then(function (response) {
+                    alert("dem bom");
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    alert("deu ruim");
+                    console.log(error);
+                })
+                .finally(function () {
+                });
+        }
         function MostraCampo() {
             document.getElementById("campoInput").removeAttribute("style");
             document.getElementById("valorInput").removeAttribute("style");
