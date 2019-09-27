@@ -1,0 +1,33 @@
+@import url(menu.css);
+
+body,
+html {
+  min-height: 100%;
+  background-color: var(--cor-padrao);
+}
+
+.container {
+  margin-bottom: 2%;
+}
+
+.color-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-second);
+  opacity: 0.9;
+}
+
+.list-group-item {
+  font-size: 15px;
+}
+
+b {
+  color: var(--cor-padrao);
+  opacity: 0.8;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+  margin-bottom: 1%;
+}

@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matazoa | Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../style/form.css">
 </head>
 
@@ -15,63 +26,59 @@
             var radiobutton = document.getElementsByName("opcaoLogin");
             if (radiobutton[0].checked) {
                 sessionStorage.setItem("tipo", "pessoa");
-            else {
-                    sessionStorage.setItem("tipo", "instituicao");
-                }
+            } else {
+                sessionStorage.setItem("tipo", "instituicao");
             }
+        }
     </script>
-    <div id="menu">
 
-        <div id="logo">
-            <a href="../../index.html">
-                <img src="../image/logo.png">
-            </a>
-        </div>
+    <div class="container-fluid">
+        <div class="card shadow">
+            <div class="card-body" style="padding-top: 1.5%">
+                <div class="row">
+                    <a href="../../index.html">
+                        <img width="100" class="d-inline-block align-top" src="../image/logo1.png">
+                    </a>
+                </div>
+                <div class="row">
+                    <h5><b>Login</b></h5>
+                </div>
+                <form for="login" method="POST" action="../../service/Authenticate.php" autocomplete="off">
+                    <div class="row row-end row-top">
+                        <input type="email" placeholder="Email" id="emailInput" name="emailInput" required>
+                    </div>
+                    <div class="row row-end row-top">
+                        <input type="password" placeholder="Senha" id="senhaInput" name="senhaInput" required>
+                    </div>
 
-        <div id="footer">
-            <p>Todos os direitos reservados ® 2019.</p>
-        </div>
-    </div>
-    <div id="corpo">
-        <div class="container login">
-            <div class="row">
-                <h2>Login</h2>
-            </div>
-            <form for="login" method="POST" action="../../service/Authenticate.php" autocomplete="off">
-                <div class="row row-end row-top">
-                    <input type="email" placeholder="Email" id="emailInput" name="emailInput" required>
-                </div>
-                <div class="row row-end row-top">
-                    <input type="password" placeholder="Senha" id="senhaInput" name="senhaInput" required>
-                </div>
-
-                <div class="row-opt block-opt">
-                    <div>
-                        <label for="opcao">Acessar como:</label>
+                    <div class="row-opt block-opt">
+                        <div>
+                            <label for="opcao">Acessar como:</label>
+                        </div>
+                        <div class="item-opt">
+                            <input type="radio" name="opcaoLogin" value="pessoa">
+                            <label for="pessoa">Pessoa</label>
+                        </div>
+                        <div class="item-opt">
+                            <input type="radio" name="opcaoLogin" value="Instituicao">
+                            <label for="canil">Instituição</label>
+                        </div>
                     </div>
-                    <div class="item-opt">
-                        <input type="radio" name="opcaoLogin" value="pessoa">
-                        <label for="pessoa">Pessoa</label>
+                    <div id="submit">
+                        <input id="enviar" type="submit" onclick="salvarStorage()" value="Entrar">
                     </div>
-                    <div class="item-opt">
-                        <input type="radio" name="opcaoLogin" value="Instituicao">
-                        <label for="canil">Instituição</label>
+                </form>
+                <br />
+                <div class="row">
+                    <label>Não tem um perfil ainda?</label>
+                </div>
+                <div class="row-opt">
+                    <div class="item-opt space-top">
+                        <a href="cadastro-instituicao.html">Cadastre sua Instituição</a> <br />
                     </div>
-                </div>
-                <div id="submit">
-                    <input id="enviar" type="submit" onclick="salvarStorage()" value="Entrar">
-                </div>
-            </form>
-            <br />
-            <div class="row">
-                <label>Não tem um perfil ainda?</label>
-            </div>
-            <div class="row-opt">
-                <div class="item-opt space-top">
-                    <a href="cadastro-instituicao.html">Cadastre sua Instituição</a> <br />
-                </div>
-                <div class="item-opt space-top">
-                    <a href="cadastro-pessoa.html">Cadastre seu perfil pessoal</a>
+                    <div class="item-opt space-top">
+                        <a href="cadastro-pessoa.html">Cadastre seu perfil pessoal</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,79 +6,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Metazoa | Meu Perfil</title>
-    <link rel="stylesheet" href="../style/main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../style/basic.css">
+
 </head>
 
 <body onload="carregarUsuario()">
-    <div id="menu">
 
-        <div id="logo">
-            <a href="../../index.html">
-                <img src="../image/logo.png">
-            </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-color shadow-sm">
+        <a class="navbar-brand" href="../../index.html">
+            <img width="100" class="d-inline-block align-top" src="../image/logo1.png">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="feed.html">
+                        <img src="../image/pet.png">
+                        <span>Feed</span>
+                    </a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="#">
+                        <img src="../image/mundo.png">
+                        <span>Explorar</span>
+                    </a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" href="#">
+                        <img src="../image/email.png">
+                        <span>Convites</span>
+                    </a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link" selected href="#">
+                        <img src="../image/face.png">
+                        <span>Perfil</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-
-        <ul>
-            <li>
-                <a href="feed.php">
-                    <img src="../image/pet.png">
-                    <span>Feed</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="../image/mundo.png">
-                    <span>Explorar</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src="../image/email.png">
-                    <span>Convites</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" selected>
-                    <img src="../image/face.png">
-                    <span>Perfil</span>
-                </a>
-            </li>
-        </ul>
-        <div id="footer">
-            <p>Todos os direitos reservados ® 2019.</p>
-        </div>
-    </div>
-    <div id="corpo">
-        <div id="container">
-            <ul id="dadosUser" class="list-group"></ul>
-            <button id="btnAlt" class="btn" onclick="MostraCampo()">Alterar valores</button>
-            <button id="btnExc" onclick="excluir()">Excluir conta</button>
-            <form action="../../service/Register.php" method="POST" autocomplete="off">
-                <div class="row">
-                    <input id="campoInput" type="text" placeholder="Campo a ser alterado" name="alteracaoUsuario"
-                        style="display:none;" required>
+    </nav>
+    <br>
+    <div class="container">
+        <div class="card shadow">
+            <div class=" card-body">
+                <h6 class="color-title">Sobre mim:</h6>
+                <ul id="dadosUser" class="list-group"></ul>
+                <br>
+                <div class="row btn-block">
+                    <button id="btnAlt" class="btn btn-info col-4 offset-2" onclick="MostraCampo()">Alterar
+                        valores</button>
+                    <button id="btnExc" class="btn btn-danger col-4" onclick="excluir()">Excluir conta</button>
                 </div>
+                <form action="../../service/Register.php" method="POST" autocomplete="off" id="formAlteracao"
+                    style="display:none;">
+                    <div class="row">
+                        <input id="campoInput" class="form-control" type="text" placeholder="Campo a ser alterado"
+                            name="alteracaoUsuario" style="display:none;" required>
+                    </div>
+                    <div class="row">
+                        <input id="valorInput" class="form-control" type="text" placeholder="Novo valor"
+                            name="valorInput" style="display:none;" required>
+                    </div>
+                    <div class="row">
+                        <input id="buttonSubmit" class="btn btn-success btn-block" type="submit" value="Confirmar"
+                            style="display:none;">
+                    </div>
+                </form>
+                <form action="../Backend/Exclusao.php" method="POST" autocomplete="off" id="formExclusao"
+                    style="display:none;">
+                    <div class="row">
+                        <input id="exclusaoUsuario" class="form-control" type="password"
+                            placeholder="Digite sua senha para confirmar" name="exclusaoUsuario" style="display:none;"
+                            required>
+                    </div>
+                    <div class="row">
+                        <input id="submitExc" class="btn btn-block btn-success" type="submit" value="Confirmar"
+                            style="display:none;">
+                    </div>
+                </form>
                 <div class="row">
-                    <input id="valorInput" type="text" placeholder="Novo valor" name="valorInput" style="display:none;"
-                        required>
+                    <button id="cancel" class="btn btn-danger btn-block" onclick="EscondeCampos()" style="display:none">
+                        Cancelar
+                    </button>
                 </div>
-                <div class="row">
-                    <input id="buttonSubmit" class="btn" type="submit" value="Confirmar" style="display:none;">
-                </div>
-            </form>
-            <form action="../Backend/Exclusao.php" method="POST" autocomplete="off">
-                <div class="row">
-                    <input id="exclusaoUsuario" type="password" placeholder="Para excluir sa conta, digite sua senha"
-                        name="exclusaoUsuario" style="display:none;" required>
-                </div>
-                <div class="row">
-                    <input id="submitExc" class="btn" type="submit" value="Confirmar" style="display:none;">
-                </div>
-            </form>
-            <button id="cancel" onclick="EscondeCampos()" style="display:none"> Cancelar </button>
-            <h2>Seus animais: </h2>
+                <h5 class="text-center color-title">Meus animais:</h5>
+            </div>
         </div>
     </div>
 
@@ -100,16 +127,18 @@
         }
 
         function mostrarDados(usuario) {
-            var lista = document.querySelector("#dadosUser");
+            let lista = document.querySelector("#dadosUser");
 
-            var valoresUsuario = Object.values(usuario);
+            let chaves = Object.keys(usuario);
+            let valores = Object.values(usuario);
 
-            valoresUsuario.forEach(elemento => {
-                var item = document.createElement("li");
+            for (let i = 0; i < chaves.length; i++) {
+                let item = document.createElement("li");
                 item.className = "list-group-item";
-                item.innerHTML = elemento;
+                let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
                 lista.appendChild(item);
-            });
+            }
         }
 
         function MostraCampo() {
@@ -119,19 +148,24 @@
             document.getElementById("cancel").removeAttribute("style");
             document.getElementById("btnExc").setAttribute("style", "display:none");
             document.getElementById("btnAlt").setAttribute("style", "display:none");
+            document.getElementById("formAlteracao").removeAttribute("style");
 
         }
 
         function excluir() {
+            document.getElementById("formExclusao").removeAttribute("style");
             document.getElementById("btnExc").setAttribute("style", "display:none");
             document.getElementById("btnAlt").setAttribute("style", "display:none");
             document.getElementById("submitExc").removeAttribute("style");
             document.getElementById("exclusaoUsuario").removeAttribute("style");
             document.getElementById("cancel").removeAttribute("style");
+            document.getElementById("formAlteracao").setAttribute("style", "display:none");
 
         }
 
         function EscondeCampos() {
+            document.getElementById("formAlteracao").setAttribute("style", "display:none");
+            document.getElementById("formExclusao").setAttribute("style", "display:none");
             document.getElementById("btnExc").removeAttribute("style");
             document.getElementById("btnAlt").removeAttribute("style");
             document.getElementById("campoInput").setAttribute("style", "display:none");
