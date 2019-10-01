@@ -43,4 +43,7 @@ class Animal
     {
         return $this->idade;
     }
+    function getEspecie(){
+        return $this->especie;
+    }
 }

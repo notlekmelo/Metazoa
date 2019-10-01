@@ -5,7 +5,7 @@ if (isset($_GET['pessoa_id'])) {
     $db = new Database();
     $con = $db->connect();
     $pessoa_id = $_GET['pessoa_id'];
-    $result = mysqli_query($con, "SELECT * FROM `pessoa` WHERE Email=$pessoa_id");
+    $result = mysqli_query($con, "SELECT * FROM `pessoa` WHERE Email='$pessoa_id'");
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         $nome = $row['Nome'];
@@ -23,7 +23,7 @@ if (isset($_GET['pessoa_id'])) {
     $db = new Database();
     $con = $db->connect();
     $instituicao_id = $_GET['instituicao_id'];
-    $result = mysqli_query($con, "SELECT * FROM `intituicao` WHERE Email=$instituicao_id");
+    $result = mysqli_query($con, "SELECT * FROM `instituicao` WHERE Email='$instituicao_id'");
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_array($result);
         $nome = $row['Nome'];
@@ -39,13 +39,34 @@ if (isset($_GET['pessoa_id'])) {
     } else {
         responseErro("Nenhum registro encontrado");
     }
-} else {
+} else if(isset($_GET['animais_de'])){
+    $db = new Database();
+    $con = $db->connect();
+    $dono = $_GET['animais_de'];
+    $AnimaisJson = array();
+    $result = mysqli_query($con, "SELECT * FROM `animal` WHERE Dono='$dono' ");
+    $qtd = mysqli_num_rows($result);
+    while(qtd > 0){
+        $row = mysqli_fetch_array($result);
+        $nomeAn = $row['NomeAnimal'];
+        $Especie = $row['Especie'];
+        $Raca = $row['Raca'];
+        $Desc = $row['Desc'];
+        $Sexo = $row['Sexo'];
+        $objetivo = $row['Objetivo'];
+        $idade = $row['Idade'];
+        array_push($AnimaisJson, responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade));
+   } 
+    mysqli_close($con);
+    $jsonImprime = json_encode($AnimaisJson);
+    echo $jsonImprime;
+}else {
     responseErro("Requisição inválida");
 }
 
 function responsePessoa($pessoa_id, $Nome, $Telefone, $estado, $cidade, $rua, $bairro)
 {
-    $response['pessoa_id'] = $pessoa_id;
+    $response['E-mail'] = $pessoa_id;
     $response['Nome'] = $Nome;
     $response['Telefone'] = $Telefone;
     $response['Estado'] = $estado;
@@ -59,7 +80,7 @@ function responsePessoa($pessoa_id, $Nome, $Telefone, $estado, $cidade, $rua, $b
 
 function responseInstituicao($instituicao_id, $Nome, $CNPJ, $Telefone, $estado, $cidade, $rua, $bairro, $conta)
 {
-    $response['pessoa_id'] = $instituicao_id;
+    $response['E-mail'] = $instituicao_id;
     $response['Nome'] = $Nome;
     $response['CNPJ'] = $CNPJ;
     $response['Telefone'] = $Telefone;
@@ -71,6 +92,24 @@ function responseInstituicao($instituicao_id, $Nome, $CNPJ, $Telefone, $estado, 
 
     $json_response = json_encode($response);
     echo $json_response;
+}
+
+function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua)
+{
+    $response['NomeAnimal'] = $nomeAn;
+    $response['Especie'] = $Especie;
+    $response['Raca'] = $Raca;
+    $response['Desc'] = $Desc;
+    $response['Objetivo'] = $objetivo;
+    $response['Sexo'] = $Sexo;
+    $response['Idade'] = $idade;
+    $response['Contato']= $dono;
+    $response['nomeDono'] = $nomeDono;
+    $response['Cidade'] = $cidade;
+    $response['Rua'] = $rua;
+
+    $json_response = json_encode($response);
+    return $json_response;
 }
 
 function responseErro($erro)
