@@ -35,14 +35,14 @@
             <ul class="navbar-nav">
                 <li class="nav-item px-3">
                     <a class="nav-link" href="feed.html">
-                        <img src="../image/pet.png">
+                        <img src="../image/mundo.png">
                         <span>Feed</span>
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" href="#">
-                        <img src="../image/mundo.png">
-                        <span>Explorar</span>
+                    <a class="nav-link" href="animais.html">
+                        <img src="../image/pet.png">
+                        <span>Animais</span>
                     </a>
                 </li>
                 <li class="nav-item px-3">
@@ -67,16 +67,19 @@
                 <h6 class="color-title">Sobre mim:</h6>
                 <ul id="dadosUser" class="list-group"></ul>
                 <br>
-                <div class="row btn-block">
-                    <button id="btnAlt" class="btn btn-info col-4 offset-2" onclick="MostraCampo()">Alterar
-                        valores</button>
-                    <button id="btnExc" class="btn btn-danger col-4" onclick="excluir()">Excluir conta</button>
+                <div class="d-flex flex-row justify-content-center btn-group">
+                    <button id="btnAlt" class="btn btn-info col-md-4" onclick="MostraCampo()">Alterar
+                        dados</button>
+                    <button id="btnExc" class="btn btn-danger col-md-4" onclick="excluir()">Excluir
+                        conta</button>
                 </div>
                 <form action="../../service/Register.php" method="POST" autocomplete="off" id="formAlteracao"
                     style="display:none;">
                     <div class="row">
-                        <input id="campoInput" class="form-control" type="text" placeholder="Campo a ser alterado"
-                            name="alteracaoUsuario" style="display:none;" required>
+                        <select id="campoInput" class="form-control" type="text" name="alteracaoUsuario"
+                            style="display:none;" required>
+                            <option value="" disabled hidden selected>campo a ser alterado</option>
+                        </select>
                     </div>
                     <div class="row">
                         <input id="valorInput" class="form-control" type="text" placeholder="Novo valor"
@@ -95,16 +98,15 @@
                             required>
                     </div>
                     <div class="row">
-                        <input id="submitExc" class="btn btn-block btn-success" type="submit" value="Confirmar"
+                        <input id="submitExc" class="btn btn-success col-sm" type="submit" value="Confirmar"
                             style="display:none;">
                     </div>
                 </form>
                 <div class="row">
-                    <button id="cancel" class="btn btn-danger btn-block" onclick="EscondeCampos()" style="display:none">
+                    <button id="cancel" class="btn btn-danger col-sm" onclick="EscondeCampos()" style="display:none">
                         Cancelar
                     </button>
                 </div>
-                <h5 class="text-center color-title">Meus animais:</h5>
             </div>
         </div>
     </div>
@@ -113,15 +115,22 @@
 
     <script type="text/javascript">
 
+        var chaves;
+
         function carregarUsuario() {
 
             let tipo = sessionStorage.getItem("tipo");
             let email = sessionStorage.getItem("email");
 
             axios.get(`../../service/Get.php?${tipo}_id=${email}`)
-                .then(response => mostrarDados(response.data))
+                .then(response => {
+                    if (response.data.erro != null)
+                        mostrarDados(response.data)
+                    else
+                        alert("Erro ao carregar dados de usuário.");
+                })
                 .catch(error => {
-                    alert("Erro ao carregar dados de usuário");
+                    alert("Erro na requisição.");
                     console.log(error);
                 });
         }
@@ -129,7 +138,7 @@
         function mostrarDados(usuario) {
             let lista = document.querySelector("#dadosUser");
 
-            let chaves = Object.keys(usuario);
+            chaves = Object.keys(usuario);
             let valores = Object.values(usuario);
 
             for (let i = 0; i < chaves.length; i++) {
@@ -141,7 +150,21 @@
             }
         }
 
+        function listarCampos() {
+            let select = document.querySelector('#campoInput');
+            chaves.forEach(campo => {
+                if (campo != 'tipo') {
+                    let option = document.createElement('option');
+                    option.setAttribute('value', campo);
+                    let campoFormat = campo[0].toUpperCase() + campo.slice(1);
+                    option.innerHTML = campoFormat;
+                    select.appendChild(option);
+                }
+            });
+        }
+
         function MostraCampo() {
+            listarCampos();
             document.getElementById("campoInput").removeAttribute("style");
             document.getElementById("valorInput").removeAttribute("style");
             document.getElementById("buttonSubmit").removeAttribute("style");
@@ -149,7 +172,6 @@
             document.getElementById("btnExc").setAttribute("style", "display:none");
             document.getElementById("btnAlt").setAttribute("style", "display:none");
             document.getElementById("formAlteracao").removeAttribute("style");
-
         }
 
         function excluir() {

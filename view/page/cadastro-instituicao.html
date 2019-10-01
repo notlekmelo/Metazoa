@@ -8,152 +8,154 @@
     <meta name="keywords" content="cadastrode canis, cachorros, gatos, animais">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Metazoa | Cadastro de Canil</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../style/form.css">
 </head>
 
 <body>
-    <div id="menu">
 
-        <div id="logo">
-            <a href="../../index.html">
-                <img src="../image/logo.png">
-            </a>
-        </div>
-        <ul>
-            <li>
-                <a href="login.html">
-                    <img src="../image/auth.png">
-                    <span>Entrar</span>
-                </a>
-            </li>
-        </ul>
-        <div id="footer">
-            <p>Todos os direitos reservados ® 2019.</p>
-        </div>
-    </div>
-    <div id="corpo">
-        <div class="container">
-            <h2>Cadastro de Instituição</h2>
-            <form id="dadosCanil" action="../../service/Register.php" method="POST" autocomplete="off">
-                <div class="grid">
-                    <div class="row">
-                        <input placeholder="Nome da Instituição" type="text" name="nomeCanil" required>
+    <div class="container-fluid">
+        <div class="card shadow" style="width: 580px">
+            <div class="card-body" style="padding: 2%">
+                <h4 class="text-center"> <b>Cadastro de Instituição</b> </h4>
+                <form id="dadosCanil" action="../../service/Register.php" method="POST" autocomplete="off">
+                    <div class="grid">
+                        <div class="row">
+                            <input placeholder="Nome da Instituição" type="text" name="nomeCanil" required>
+                        </div>
+                        <div class="row">
+                            <input type="number" placeholder="CNPJ" name="cnpjCanil" minlength="14" maxlength="14"
+                                required>
+                        </div>
+                        <div class="row">
+                            <select name="estado" placeholder="Estado" id="inputEstado" required>
+                                <option value="" disabled selected hidden>Estado</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <input type="text" placeholder="Cidade" name="cidadeCanil" required>
+                        </div>
+                        <div class="row">
+                            <input type="text" placeholder="Rua" name="ruaCanil" required>
+                        </div>
+                        <div class="row">
+                            <input type="number" placeholder="Número" name="numeroCanil" required>
+                        </div>
+                        <div class="row">
+                            <input type="number" placeholder="Complemento" name="complemento">
+                        </div>
+                        <div class="row">
+                            <input type="text" placeholder="Bairro" name="bairroCanil" required>
+                        </div>
+                        <div class="row">
+                            <input type="number" placeholder="Telefone para Contato" name="telCanil" minlength="10"
+                                maxlength="11" required>
+                        </div>
+                        <div class="row">
+                            <input type="email" placeholder="Email" name="emailCanil" required>
+                        </div>
+                        <div class="row">
+                            <input type="password" placeholder="Senha" name="senhaCanil" id="senhaCanil" minlength="6"
+                                maxlength="12" required>
+                        </div>
+                        <div class="row">
+                            <input type="password" placeholder="Confirmar Senha" name="confirmaSenha" id="confirmaSenha"
+                                required onkeyup="VerificaSenha()">
+                        </div>
                     </div>
-                    <div class="row">
-                        <input type="number" placeholder="CNPJ" name="cnpjCanil" minlength="14" maxlength="14" required>
+                    <div id="senhas" class="row" style="display: none">
+                        <p id="comparaSenhas"></p>
                     </div>
-                    <div class="row">
-                        <select name="estado" placeholder="Estado" id="inputEstado" required>
-                            <option value="" disabled selected hidden>Estado</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espírito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PR">Paraná</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="RR">Roraima</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="TO">Tocantins</option>
-                        </select>
+                    <div class="row-conta text-center">
+                        <label for="banco">Deseja que os outros usuários possam visualizar sua conta bancária para
+                            contribuírem com sua instituição?
+                        </label>
                     </div>
-                    <div class="row">
-                        <input type="text" placeholder="Cidade" name="cidadeCanil" required>
+                    <div class="row-opt">
+                        <div class="item-opt">
+                            <input class="check" type="radio" name="opcaoConta" value="sim" onclick="MostraCampo()">
+                            <label for="sim">Sim</label>
+                        </div>
+                        <div class="item-opt">
+                            <input class="check" type="radio" name="opcaoConta" valeu="nao" onclick="EscondeCampo()">
+                            <label for="nao">Não</label>
+                        </div>
                     </div>
-                    <div class="row">
-                        <input type="text" placeholder="Rua" name="ruaCanil" required>
+                    <div class="row row-end">
+                        <input type="text" placeholder="Banco" name="bancoInput" id="bancoInput" style="display: none">
                     </div>
-                    <div class="row">
-                        <input type="number" placeholder="Número" name="numeroCanil" required>
+                    <div id="camposBanco" class="grid" style="display: none">
+                        <div class="row">
+                            <input type="text" placeholder="Número da Agência" name="agenciaInput" id="agenciaInput"
+                                style="display: none">
+                        </div>
+                        <div class="row">
+                            <input type="text" placeholder="Número da Conta" name="contaInput" id="contaInput"
+                                style="display: none">
+                        </div>
                     </div>
-                    <div class="row">
-                        <input type="number" placeholder="Complemento" name="complemento">
+                    <div id="submit">
+                        <input id="enviar" type="submit" value="Enviar">
                     </div>
-                    <div class="row">
-                        <input type="text" placeholder="Bairro" name="bairroCanil" required>
+                    <div class="row" style="margin-bottom: 0%">
+                        <span style="margin-right: 1%"> Já possui uma conta? </span>
+                        <a href="login.html">Fazer Login</a>
                     </div>
-                    <div class="row">
-                        <input type="number" placeholder="Telefone para Contato" name="telCanil" minlength="10"
-                            maxlength="11" required>
-                    </div>
-                    <div class="row">
-                        <input type="email" placeholder="Email" name="emailCanil" required>
-                    </div>
-                    <div class="row">
-                        <input type="password" placeholder="Senha" name="senhaCanil" id="senhaCanil" minlength="6"
-                            maxlength="12" required>
-                    </div>
-                    <div class="row">
-                        <input type="password" placeholder="Confirmar Senha" name="confirmaSenha" id="confirmaSenha"
-                            required onkeyup="VerificaSenha()">
-                    </div>
-                </div>
-                <div class="row">
-                    <p id="comparaSenhas"></p>
-                </div>
-                <div class="row-conta">
-                    <label for="banco">Deseja que os outros usuários possam visualizar sua conta bancária para
-                        contribuírem
-                        com
-                        sua instituição?
-                    </label>
-                </div>
-                <div class="row-opt">
-                    <div class="item-opt">
-                        <input class="check" type="radio" name="opcaoConta" value="sim" onclick="MostraCampo()">
-                        <label for="sim">Sim</label>
-                    </div>
-                    <div class="item-opt">
-                        <input class="check" type="radio" name="opcaoConta" valeu="nao" onclick="EscondeCampo()">
-                        <label for="nao">Não</label>
-                    </div>
-                </div>
-                <div class="row row-end">
-                    <input type="text" placeholder="Banco" name="bancoInput" id="bancoInput" style="display: none">
-                </div>
-                <div class="grid">
-                    <div class="row">
-                        <input type="text" placeholder="Número da Agência" name="agenciaInput" id="agenciaInput"
-                            style="display: none">
-                    </div>
-                    <div class="row">
-                        <input type="text" placeholder="Número da Conta" name="contaInput" id="contaInput"
-                            style="display: none">
-                    </div>
-                </div>
-                <div id="submit">
-                    <input id="enviar" type="submit" value="Enviar">
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
+
 
     <script type="text/javascript">
 
         function VerificaSenha() {
+            let div = document.getElementById("senhas");
             let senha = document.getElementById("senhaCanil").value;
             let confirma = document.getElementById("confirmaSenha").value;
             if (senha === confirma || confirma === "") {
                 document.getElementById("comparaSenhas").innerText = " ";
+                div.setAttribute("style", "display:none");
             }
             else {
+                div.removeAttribute("style");
                 document.getElementById("comparaSenhas").innerText = "As senhas não coincidem."
             }
         }
@@ -162,12 +164,14 @@
             document.getElementById("bancoInput").removeAttribute("style");
             document.getElementById("agenciaInput").removeAttribute("style");
             document.getElementById("contaInput").removeAttribute("style");
+            document.getElementById("camposBanco").removeAttribute("style");
         }
 
         function EscondeCampo() {
             document.getElementById("bancoInput").setAttribute("style", "display:none");
             document.getElementById("agenciaInput").setAttribute("style", "display:none");
             document.getElementById("contaInput").setAttribute("style", "display:none");
+            document.getElementById("camposBanco").setAttribute("style", "display:none");
 
         }
     </script>
