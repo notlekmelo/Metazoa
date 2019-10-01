@@ -59,6 +59,21 @@ class Database
         }
     }
 
+    function inserirAnimal($animal){
+        $this->connect();
+        $this->query = "insert into animal (NomeAnimal,Especie,Raca,Sexo,Descricao,Objetivo,Idade,Dono) values ('" . $animal->getNome() . "','" . $animal->getEspecie() . "','" . $animal->getRaca() . "','" . $animal->getSexo() . "','" . $person->getDesc() . "','" . $person->getObjetivo() . "','" . $person->getIdade() "','" . $person->getDono() . "')";
+        if ($this->result = mysqli_query($this->link, $this->query)) {
+            $this->disconnect();
+            return $this->result;
+        } else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
     function login($email,$senha,$tipo){
         $this->connect();
         $this->query = "SELECT * from ".$tipo." where Email = '".$email."' and Senha = '".$senha."';";

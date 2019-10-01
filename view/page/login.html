@@ -23,7 +23,7 @@
     <script type="text/javascript">
         function salvarStorage() {
             sessionStorage.setItem("email", document.getElementById("emailInput").value);
-            var radiobutton = document.getElementsByName("opcaoLogin");
+            var radiobutton = document.getElementsByClassName("opcaoLogin");
             if (radiobutton[0].checked) {
                 sessionStorage.setItem("tipo", "pessoa");
             } else {
@@ -56,11 +56,11 @@
                             <label for="opcao">Acessar como:</label>
                         </div>
                         <div class="item-opt">
-                            <input type="radio" name="opcaoLogin" value="pessoa">
+                            <input type="radio" name="opcaoLogin" class="opcaoLogin" value="pessoa">
                             <label for="pessoa">Pessoa</label>
                         </div>
                         <div class="item-opt">
-                            <input type="radio" name="opcaoLogin" value="Instituicao">
+                            <input type="radio" name="opcaoLogin" class="opcaoLogin" value="Instituicao">
                             <label for="canil">Instituição</label>
                         </div>
                     </div>
