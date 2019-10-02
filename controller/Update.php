@@ -7,6 +7,6 @@ session_start();
 $bd = new Database();
 
 if (isset($_POST["alteracaoUsuario"])) {
-    $bd->updateCampo($_SESSION['tipo'], $_POST["campoInput"], $_POST["valorInput"], $_SESSION['logado']);
-    header('Location: ../view/page/perfil.php');
+    $bd->updateCampo($_SESSION['tipo'], $_POST["alteracaoUsuario"], $_POST["valorInput"], $_SESSION['logado']);
+    header('Location: ../view/page/perfil.html');
 }

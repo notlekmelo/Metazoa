@@ -73,12 +73,12 @@
                     <button id="btnExc" class="btn btn-danger col-md-4" onclick="excluir()">Excluir
                         conta</button>
                 </div>
-                <form action="../../service/Register.php" method="POST" autocomplete="off" id="formAlteracao"
+                <form action="../../controller/Update.php" method="POST" autocomplete="off" id="formAlteracao"
                     style="display:none;">
                     <div class="row">
                         <select id="campoInput" class="form-control" type="text" name="alteracaoUsuario"
                             style="display:none;" required>
-                            <option value="" disabled hidden selected>campo a ser alterado</option>
+                            <option value="" disabled hidden selected>Campo a ser alterado</option>
                         </select>
                     </div>
                     <div class="row">
@@ -122,12 +122,10 @@
             let tipo = sessionStorage.getItem("tipo");
             let email = sessionStorage.getItem("email");
 
-            axios.get(`../../service/Get.php?${tipo}_id=${email}`)
+            axios.get(`../../controller/Get.php?${tipo}_id=${email}`)
                 .then(response => {
-                    if (response.data.erro != null)
                         mostrarDados(response.data)
-                    else
-                        alert("Erro ao carregar dados de usuário.");
+                  
                 })
                 .catch(error => {
                     alert("Erro na requisição.");

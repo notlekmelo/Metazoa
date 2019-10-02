@@ -48,7 +48,7 @@ if (isset($_GET['pessoa_id'])) {
     $qtd = mysqli_num_rows($result);
     while(qtd > 0){
         $row = mysqli_fetch_array($result);
-        $nomeAn = $row['NomeAnimal'];
+        $nomeAn = $row['Nome do Animal'];
         $Especie = $row['Especie'];
         $Raca = $row['Raca'];
         $Desc = $row['Desc'];
