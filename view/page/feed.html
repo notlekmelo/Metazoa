@@ -62,7 +62,7 @@
     <div class="container">
         <div class="card shadow">
             <div class=" card-body">
-                <h6 class="color-title">Meus animais:</h6>
+                <h6 class="color-title">Animais na região:</h6>
                 <ul id="listaAnimais" class="list-group"></ul>
                 <br>
             </div>
@@ -74,8 +74,8 @@
     <script type="text/javascript">
 
         function carregarFeed() {
-            // let usuario = carregarUsuario();
-            // carregarAnimais(usuario.Estado);
+            let usuario = carregarUsuario();
+            carregarAnimais(usuario.Estado);
             // carregarEventos(usuario.Estado);
         }
 
@@ -98,7 +98,7 @@
             axios.get(`../../controller/GetAll.php?animaisLocal=${local}`)
                 .then(response => {
                     if (response.data.Erro != "Requisição inválida")
-                        mostrarDados(response.data);
+                        mostrarAnimais(response.data);
                 })
                 .catch(error => {
                     alert("Erro ao carregar animais.");
