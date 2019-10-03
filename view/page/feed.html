@@ -62,7 +62,9 @@
     <div class="container">
         <div class="card shadow">
             <div class=" card-body">
-
+                <h6 class="color-title">Meus animais:</h6>
+                <ul id="listaAnimais" class="list-group"></ul>
+                <br>
             </div>
         </div>
     </div>
@@ -71,47 +73,63 @@
 
     <script type="text/javascript">
 
-        var chaves;
-        var local;
-
         function carregarFeed() {
+            // let usuario = carregarUsuario();
+            // carregarAnimais(usuario.Estado);
+            // carregarEventos(usuario.Estado);
+        }
 
+        function carregarUsuario() {
             let tipo = sessionStorage.getItem("tipo");
             let email = sessionStorage.getItem("email");
 
             axios.get(`../../controller/Get.php?${tipo}_id=${email}`)
                 .then(response => {
-                    local = response.data.Estado;
-                    axios.get(`../../controller/GetAll.php?animaisLocal=${local}`)
-                        .then(responseAnimal => {
-                            console.log(responseAnimal);
-
-                            mostrarDados(responseAnimal.data);
-                        })
+                    if (response.data.Erro != "Requisição inválida")
+                        return response.data;
                 })
                 .catch(error => {
-                    alert("Erro na requisição.");
+                    alert("Erro ao carregar usuário.");
                     console.log(error);
                 });
         }
 
-        function mostrarDados(usuario) {
-            let lista = document.querySelector(".card-body");
+        function carregarAnimais(local) {
+            axios.get(`../../controller/GetAll.php?animaisLocal=${local}`)
+                .then(response => {
+                    if (response.data.Erro != "Requisição inválida")
+                        mostrarDados(response.data);
+                })
+                .catch(error => {
+                    alert("Erro ao carregar animais.");
+                    console.log(error);
+                });
+        }
 
-            var chaves2;
-            var valores2;
-            let valores = Object.values(usuario);
-            valores.forEach(element => {
-                chaves2 = Object.keys(element);
-                valores2 = Object.values(element);
-            });
-            for (let i = 0; i < chaves2.length; i++) {
-                let item = document.createElement("li");
-                item.className = "list-group-item";
-                let chaveFormat = chaves2[i][0].toUpperCase() + chaves2[i].slice(1);
-                item.innerHTML = `<b>${chaveFormat}</b>: ${valores2[i]}`;
-                lista.appendChild(item);
-            }
+        function carregarEventos(local) {
+
+        }
+
+        function mostrarAnimais(animais) {
+            let lista = document.querySelector("#listaAnimais");
+            animais.forEach(animal => {
+                let chaves = Object.keys(animal);
+                let valores = Object.values(animal);
+                for (let i = 0; i < chaves.length; i++) {
+                    let item = document.createElement("li");
+                    item.className = "list-group-item";
+                    if (i == 0) {
+                        item.classList.add("text-center");
+                        item.setAttribute("style", "color: black");
+                        item.innerHTML = `<b>${valores[i]}</b>`;
+                    }
+                    else {
+                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                    }
+                    lista.appendChild(item);
+                }
+            })
         }
 
     </script>

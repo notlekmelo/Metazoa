@@ -34,7 +34,7 @@
 }
 
 a[selected] {
-  filter: invert(100%);
+  filter: invert(81%);
   cursor: default;
   pointer-events: none;
   opacity: 0.9;
