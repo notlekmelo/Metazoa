@@ -75,8 +75,8 @@
 
         function carregarFeed() {
             let usuario = carregarUsuario();
-            carregarAnimais(usuario.Estado);
-            // carregarEventos(usuario.Estado);
+           //carregarAnimais(usuario.estado);
+            // carregarEventos(usuario.estado);
         }
 
         function carregarUsuario() {
@@ -85,8 +85,9 @@
 
             axios.get(`../../controller/Get.php?${tipo}_id=${email}`)
                 .then(response => {
-                    if (response.data.Erro != "Requisição inválida")
-                        return response.data;
+                    if (response.data.Erro != "Requisição inválida"){
+                            carregarAnimais(response.data.estado);
+                    }
                 })
                 .catch(error => {
                     alert("Erro ao carregar usuário.");

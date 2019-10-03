@@ -43,36 +43,40 @@ if (isset($_GET['pessoa_id'])) {
     $db = new Database();
     $con = $db->connect();
     $dono = $_GET['animais_de'];
-    $AnimaisJson = array();
+    $AnimaisJson = "[";
     $result = mysqli_query($con, "SELECT * FROM `animal` WHERE Dono='$dono' ");
     $qtd = mysqli_num_rows($result);
-    while(qtd > 0){
+    while($qtd > 0){
         $row = mysqli_fetch_array($result);
-        $nomeAn = $row['Nome do Animal'];
+        $cod = $row['Codigo'];
+        $nomeAn = $row['NomeAnimal'];
         $Especie = $row['Especie'];
         $Raca = $row['Raca'];
-        $Desc = $row['Desc'];
+        $Desc = $row['Descricao'];
         $Sexo = $row['Sexo'];
         $objetivo = $row['Objetivo'];
         $idade = $row['Idade'];
-        array_push($AnimaisJson, responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade));
+        if($qtd - 1 > 0)
+            $AnimaisJson = $AnimaisJson . responseAnimais($cod,$nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade) . ",";
+        else $AnimaisJson = $AnimaisJson . responseAnimais($cod,$nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade);
+        $qtd = $qtd -1;
    } 
     mysqli_close($con);
-    $jsonImprime = json_encode($AnimaisJson);
-    echo $jsonImprime;
+    $AnimaisJson = $AnimaisJson . "]";
+    echo $AnimaisJson;
 }else {
     responseErro("Requisição inválida");
 }
 
 function responsePessoa($pessoa_id, $Nome, $Telefone, $estado, $cidade, $rua, $bairro)
 {
-    $response['E-mail'] = $pessoa_id;
-    $response['Nome'] = $Nome;
-    $response['Telefone'] = $Telefone;
-    $response['Estado'] = $estado;
-    $response['Cidade'] = $cidade;
-    $response['Rua'] = $rua;
-    $response['Bairro'] = $bairro;
+    $response['e-mail'] = $pessoa_id;
+    $response['nome'] = $Nome;
+    $response['telefone'] = $Telefone;
+    $response['estado'] = $estado;
+    $response['cidade'] = $cidade;
+    $response['rua'] = $rua;
+    $response['bairro'] = $bairro;
 
     $json_response = json_encode($response);
     echo $json_response;
@@ -80,33 +84,30 @@ function responsePessoa($pessoa_id, $Nome, $Telefone, $estado, $cidade, $rua, $b
 
 function responseInstituicao($instituicao_id, $Nome, $CNPJ, $Telefone, $estado, $cidade, $rua, $bairro, $conta)
 {
-    $response['E-mail'] = $instituicao_id;
-    $response['Nome'] = $Nome;
-    $response['CNPJ'] = $CNPJ;
-    $response['Telefone'] = $Telefone;
-    $response['Estado'] = $estado;
-    $response['Cidade'] = $cidade;
-    $response['Rua'] = $rua;
-    $response['Bairro'] = $bairro;
-    $response['Conta'] = $conta;
+    $response['e-mail'] = $instituicao_id;
+    $response['nome'] = $Nome;
+    $response['cNPJ'] = $CNPJ;
+    $response['telefone'] = $Telefone;
+    $response['estado'] = $estado;
+    $response['cidade'] = $cidade;
+    $response['rua'] = $rua;
+    $response['bairro'] = $bairro;
+    $response['conta'] = $conta;
 
     $json_response = json_encode($response);
     echo $json_response;
 }
 
-function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua)
+function responseAnimais($cod,$nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade)
 {
-    $response['NomeAnimal'] = $nomeAn;
-    $response['Especie'] = $Especie;
-    $response['Raca'] = $Raca;
-    $response['Desc'] = $Desc;
-    $response['Objetivo'] = $objetivo;
-    $response['Sexo'] = $Sexo;
-    $response['Idade'] = $idade;
-    $response['Contato']= $dono;
-    $response['nomeDono'] = $nomeDono;
-    $response['Cidade'] = $cidade;
-    $response['Rua'] = $rua;
+    $response['nome do animal'] = $nomeAn;
+    $response['codigo'] = $cod;
+    $response['especie'] = $Especie;
+    $response['raca'] = $Raca;
+    $response['descricao'] = $Desc;
+    $response['objetivo'] = $objetivo;
+    $response['sexo'] = $Sexo;
+    $response['idade'] = $idade;
 
     $json_response = json_encode($response);
     return $json_response;

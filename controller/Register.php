@@ -18,7 +18,7 @@ if (isset($_POST["nomePessoa"])) {
     header('Location: ../view/page/login.html');
 
 } else if(isset($_POST['nomeAnimal'])){
-    $animal = new Animal($_POST['nomeAnimal'],$_POST['dono'],$_POST['sexo'],$_POST['especie'],$_POST['desc'],$_POST['objetivo'],$_POST['idade'],$_POST['raca']);
+    $animal = new Animal($_POST['nomeAnimal'],$_SESSION['logado'],$_POST['sexo'],$_POST['especAnimal'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
     $bd->inserirAnimal($animal);
     header('Location: ../view/page/perfil.html');
 }
