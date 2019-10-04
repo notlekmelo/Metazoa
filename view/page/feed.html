@@ -74,63 +74,72 @@
     <script type="text/javascript">
 
         function carregarFeed() {
-            let usuario = carregarUsuario();
-           //carregarAnimais(usuario.estado);
-            // carregarEventos(usuario.estado);
-        }
+            loading(true);
 
-        function carregarUsuario() {
             let tipo = sessionStorage.getItem("tipo");
             let email = sessionStorage.getItem("email");
 
             axios.get(`../../controller/Get.php?${tipo}_id=${email}`)
                 .then(response => {
-                    if (response.data.Erro != "Requisição inválida"){
-                            carregarAnimais(response.data.estado);
-                    }
+                    carregarAnimais(response.data.estado);
                 })
                 .catch(error => {
-                    alert("Erro ao carregar usuário.");
+                    erro("usuário");
                     console.log(error);
                 });
         }
 
         function carregarAnimais(local) {
-            axios.get(`../../controller/GetAll.php?animaisLocal=${local}`)
-                .then(response => {
-                    if (response.data.Erro != "Requisição inválida")
-                        mostrarAnimais(response.data);
-                })
-                .catch(error => {
-                    alert("Erro ao carregar animais.");
-                    console.log(error);
-                });
-        }
-
-        function carregarEventos(local) {
-
+            if (local) {
+                axios.get(`../../controller/GetAll.php?animaisLocal=${local}`)
+                    .then(response => mostrarAnimais(response.data))
+                    .catch(error => {
+                        erro("animais");
+                        console.log(error);
+                    });
+            } else erro();
         }
 
         function mostrarAnimais(animais) {
-            let lista = document.querySelector("#listaAnimais");
-            animais.forEach(animal => {
-                let chaves = Object.keys(animal);
-                let valores = Object.values(animal);
-                for (let i = 0; i < chaves.length; i++) {
-                    let item = document.createElement("li");
-                    item.className = "list-group-item";
-                    if (i == 0) {
-                        item.classList.add("text-center");
-                        item.setAttribute("style", "color: black");
-                        item.innerHTML = `<b>${valores[i]}</b>`;
+            if (animais) {
+                let lista = document.querySelector("#listaAnimais");
+                animais.forEach(animal => {
+                    let chaves = Object.keys(animal);
+                    let valores = Object.values(animal);
+                    for (let i = 0; i < chaves.length; i++) {
+                        let item = document.createElement("li");
+                        item.className = "list-group-item";
+                        if (i == 0) {
+                            item.classList.add("text-center");
+                            item.setAttribute("style", "color: black");
+                            item.innerHTML = `<b>${valores[i]}</b>`;
+                        }
+                        else {
+                            let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                            item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                        }
+                        lista.appendChild(item);
                     }
-                    else {
-                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
-                    }
-                    lista.appendChild(item);
-                }
-            })
+                })
+                loading(false);
+            } else erro();
+        }
+
+        function erro(mensagem = "dados") {
+            let load = document.querySelector("#loading");
+            load.innerHTML = `<b>Erro ao carregar ${mensagem}.</b>`;
+        }
+
+        function loading(visible) {
+            if (visible == true) {
+                let lista = document.querySelector("#listaAnimais");
+                let item = document.createElement("li");
+                item.setAttribute("id", "loading");
+                item.className = "list-group-item text-center";
+                item.innerHTML = "<b>Carregando...</b>";
+                lista.appendChild(item);
+            } else
+                document.querySelector("#loading").remove();
         }
 
     </script>
