@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" href="convite.html">
+                    <a class="nav-link" href="#">
                         <img src="../image/email.png">
                         <span>Convites</span>
                     </a>
@@ -63,50 +63,8 @@
         <div class="card shadow">
             <div class="card-body">
                 <!-- Inserir conteúdo da página aqui -->
-                <button onclick=mostrarForm()>Novo animal</button>
-                <button onclick=formRemover()>Remover animal adotado</button>
-                <form action="../../controller/Register.php" autocomplete="off" method="POST">
-                    <input type="text" placeholder="Digite o nome do novo animal" name="nomeAnimal" id="nomeAnimal"
-                        style="display:none">
-                    <br />
-                    <input type="text" placeholder="Digite a especie desse animal" name="especAnimal" id="especAnimal"
-                        required style="display:none">
-                    <br />
-                    <input type="text" placeholder="Digite a raça desse animal" name="racaAnimal" id="racaAnimal"
-                        style="display:none">
-                    <br />
-                    <select name="sexo" id="sexoAnimal" required style="display:none">
-                        <option value="" disabled selected hidden>Sexo do animal</option>
-                        <option value="Macho">Macho</option>
-                        <option value="Fêmea">Fêmea</option>
-                        <option value="Não se sabe">Não identificado</option>
-                    </select>
-                    <br />
-                    <input type="file" name="imageminput" id="imagemInput" style="display:none">
-                    <br />
-                    <input type="text" placeholder="Digite a descrição desse animal" name="descAnimal" id="descAnimal"
-                        style="display:none">
-                    <br />
-                    <input type="text" placeholder="Digite a idade desse animal" name="idadeAnimal" id="idadeAnimal"
-                        style="display:none">
-                    <br />
-                    <label for="obj" style="display:none" id="obj">Este animal é para adoção ou reprodução?</label>
-                    <br />
-                    <input type="radio" id="objAdoc" value="adoção" name="objetivoAnimal" class="objetivoAnimal"
-                        style="display:none">
-                    <label for="Adoção" id="objAdocLabel" style="display:none">Adoção </label>
-                    <input type="radio" value="reprodução" id="objReprod" name="objetivoAnimal" class="objetivoAnimal"
-                        style="display:none">
-                    <label for="reproducao" id="objReprodLabel" style="display:none">Reprodução </label>
-                    <br />
-                    <input type="submit" value="Cadastrar" id="cadAnimal" style="display:none">
-                </form>
-
-                <form action="../../controller/Delete.php" method="POST" autocomplete="off">
-                    <input type="number" placeholder="Digite o código do animal que foi adotado" required
-                        name="codAnimExc" id="codAnimExc" style="display:none">
-                    <input type="submit" value="Confirmar adoção" id="confirmExcl" style="display:none">
-                </form>
+                <a href="../../controller/GetImg.php?codigo=5" >Desisto</a>
+                <img src="../../controller/GetImg.php?codigo=5" />
             </div>
         </div>
     </div>
@@ -116,8 +74,7 @@
 
         var chaves;
         function carregarAnimais() {
-            let email = sessionStorage.getItem("email");
-            axios.get(`../../controller/Get.php?animais_de=${email}`)
+            axios.get(`../../controller/GetImg.php?codigo=5`)
                 .then(response => {
                     mostrarDados(response.data)
 
@@ -148,27 +105,6 @@
                 }
             })
         }
-        function mostrarForm() {
-            document.getElementById('cadAnimal').removeAttribute('style');
-            document.getElementById('nomeAnimal').removeAttribute('style');
-            document.getElementById('idadeAnimal').removeAttribute('style');
-            document.getElementById('descAnimal').removeAttribute('style');
-            document.getElementById('especAnimal').removeAttribute('style');
-            document.getElementById('sexoAnimal').removeAttribute('style');
-            document.getElementById('racaAnimal').removeAttribute('style');
-            document.getElementById('objAdocLabel').removeAttribute('style');
-            document.getElementById('obj').removeAttribute('style');
-            document.getElementById('objAdoc').removeAttribute('style');
-            document.getElementById('objReprod').removeAttribute('style');
-            document.getElementById('objReprodLabel').removeAttribute('style');
-            document.getElementById('imagemInput').removeAttribute('style');
-        }
-
-        function formRemover() {
-            document.getElementById('codAnimExc').removeAttribute('style');
-            document.getElementById('confirmExcl').removeAttribute('style');
-        }
-
     </script>
 
     </script>

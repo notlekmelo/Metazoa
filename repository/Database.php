@@ -61,7 +61,22 @@ class Database
 
     function inserirAnimal($animal,$conteudo){
         $this->connect();
-        $this->query = "insert into animal (NomeAnimal,Especie,Raca,Sexo,Descricao,Objetivo,Idade,Dono, imagem) values ('" . $animal->getNome() . "','" . $animal->getEspecie() . "','" . $animal->getRaca() . "','" . $animal->getSexo() . "','" . $animal->getDesc() . "','" . $animal->getObjetivo() . "','" . $animal->getIdade() ."','" . $animal->getDono() . "','". $conteudo . "')";
+        $this->query = "insert into animal (NomeAnimal,Especie,Raca,Sexo,Descricao,Objetivo,Idade,Dono, imagemAnimal) values ('" . $animal->getNome() . "','" . $animal->getEspecie() . "','" . $animal->getRaca() . "','" . $animal->getSexo() . "','" . $animal->getDesc() . "','" . $animal->getObjetivo() . "','" . $animal->getIdade() ."','" . $animal->getDono() . "','". $conteudo . "')";
+        if ($this->result = mysqli_query($this->link, $this->query)) {
+            $this->disconnect();
+            return $this->result;
+        } else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
+    function inserirMensagem($from, $for, $conteudo){
+        $this->connect();
+        $this->query = "insert into mensagem (idPessoa, idInstituicao, conteudo) values ( $from, $for, $conteudo) ";
         if ($this->result = mysqli_query($this->link, $this->query)) {
             $this->disconnect();
             return $this->result;
@@ -136,7 +151,7 @@ class Database
             disconnect();
         }
     }
-
+    
     function excluir($email,$tabela){
         $this->connect();
         $this->query = "Delete from ".$tabela." where Email = '".$email."';";
