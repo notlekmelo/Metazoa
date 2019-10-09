@@ -18,7 +18,18 @@ if (isset($_POST["nomePessoa"])) {
     header('Location: ../view/page/login.html');
 
 } else if(isset($_POST['nomeAnimal'])){
+    $imagem = $_FILES['imagemInput']['tmp_name'];
+    $tamanho = $_FILES['imagemInput']['size'];
+    $tipo = $_FILES['imagemInput']['type'];
+    $nome = $_FILES['imagemInput']['name'];
+  
+    if ( $imagem != "none" ){
+        $fp = fopen($imagem, "rb");
+        $conteudo = fread($fp, $tamanho);
+        $conteudo = addslashes($conteudo);
+        fclose($fp);
+  
     $animal = new Animal($_POST['nomeAnimal'],$_SESSION['logado'],$_POST['sexo'],$_POST['especAnimal'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
-    $bd->inserirAnimal($animal);
+    $bd->inserirAnimal($animal, $conteudo);
     header('Location: ../view/page/perfil.html');
 }
