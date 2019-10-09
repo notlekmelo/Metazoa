@@ -59,62 +59,90 @@
         </div>
     </nav>
     <br>
-    <div class="container">
+    <div class="container col-md-5">
         <div class="card shadow">
             <div class="card-body">
-                <!-- Inserir conteúdo da página aqui -->
-                <button onclick=mostrarForm()>Novo animal</button>
-                <button onclick=formRemover()>Remover animal adotado</button>
-                <form action="../../controller/Register.php" autocomplete="off" method="POST">
-                    <input type="text" placeholder="Digite o nome do novo animal" name="nomeAnimal" id="nomeAnimal"
-                        style="display:none">
+                <div class="btn-group btn-block">
+                    <button class="btn btn-success col-6" onclick=mostrarForm()>Novo animal</button>
+                    <button class="btn btn-danger col-6" onclick=formRemover()>Remover animal</button>
+                </div>
+                <form id="formNew" action="../../controller/Register.php" style="display:none" autocomplete="off"
+                    method="POST">
+                    <br>
+                    <input class="form-control" type="text" placeholder="Digite o nome do novo animal" name="nomeAnimal"
+                        id="nomeAnimal" style="display:none">
                     <br />
-                    <input type="text" placeholder="Digite a especie desse animal" name="especAnimal" id="especAnimal"
-                        required style="display:none">
+                    <input class="form-control" type="text" placeholder="Digite a especie desse animal"
+                        name="especAnimal" id="especAnimal" required style="display:none">
                     <br />
-                    <input type="text" placeholder="Digite a raça desse animal" name="racaAnimal" id="racaAnimal"
-                        style="display:none">
+                    <input class="form-control" type="text" placeholder="Digite a raça desse animal" name="racaAnimal"
+                        id="racaAnimal" style="display:none">
                     <br />
-                    <select name="sexo" id="sexoAnimal" required style="display:none">
+                    <select class="form-control" name="sexo" id="sexoAnimal" required style="display:none">
                         <option value="" disabled selected hidden>Sexo do animal</option>
                         <option value="Macho">Macho</option>
                         <option value="Fêmea">Fêmea</option>
                         <option value="Não se sabe">Não identificado</option>
                     </select>
                     <br />
-                    <input type="file" name="imageminput" id="imagemInput" style="display:none">
+                    <div class="custom-file" id="imagemInput" style="display:none">
+                        <input type="file" class="custom-file-input">
+                        <label class="custom-file-label" for="customFileLang">Selecionar Arquivo</label>
+                    </div>
+                    <br /> <br>
+                    <input class="form-control" type="text" placeholder="Digite a descrição desse animal"
+                        name="descAnimal" id="descAnimal" style="display:none">
                     <br />
-                    <input type="text" placeholder="Digite a descrição desse animal" name="descAnimal" id="descAnimal"
-                        style="display:none">
+                    <input class="form-control" type="text" placeholder="Digite a idade desse animal" name="idadeAnimal"
+                        id="idadeAnimal" style="display:none">
                     <br />
-                    <input type="text" placeholder="Digite a idade desse animal" name="idadeAnimal" id="idadeAnimal"
-                        style="display:none">
+                    <label class="w-100 text-center" for="obj" style="display:none" id="obj">Este animal é para adoção
+                        ou reprodução?</label>
                     <br />
-                    <label for="obj" style="display:none" id="obj">Este animal é para adoção ou reprodução?</label>
-                    <br />
-                    <input type="radio" id="objAdoc" value="adoção" name="objetivoAnimal" class="objetivoAnimal"
-                        style="display:none">
-                    <label for="Adoção" id="objAdocLabel" style="display:none">Adoção </label>
-                    <input type="radio" value="reprodução" id="objReprod" name="objetivoAnimal" class="objetivoAnimal"
-                        style="display:none">
-                    <label for="reproducao" id="objReprodLabel" style="display:none">Reprodução </label>
-                    <br />
-                    <input type="submit" value="Cadastrar" id="cadAnimal" style="display:none">
-                </form>
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <input type="radio" id="objAdoc" value="adoção" name="objetivoAnimal" class="objetivoAnimal"
+                                style="display:none">
+                            <label for="Adoção" id="objAdocLabel" style="display:none"><b>Adoção</b></label>
+                        </div>
+                        <div class="ml-5">
+                            <input type="radio" value="reprodução" id="objReprod" name="objetivoAnimal"
+                                class="objetivoAnimal" style="display:none">
+                            <label for="reproducao" id="objReprodLabel" style="display:none"><b>Reprodução</b></label>
+                        </div>
+                    </div>
 
-                <form action="../../controller/Delete.php" method="POST" autocomplete="off">
-                    <input type="number" placeholder="Digite o código do animal que foi adotado" required
-                        name="codAnimExc" id="codAnimExc" style="display:none">
-                    <input type="submit" value="Confirmar adoção" id="confirmExcl" style="display:none">
+                    <br /> <br>
+                    <input class="btn btn-info btn-block" type="submit" value="Cadastrar" id="cadAnimal"
+                        style="display:none">
+                </form>
+                <br>
+                <form id="formExc" action="../../controller/Delete.php" method="POST" style="display:none"
+                    autocomplete="off">
+                    <br>
+                    <input class="form-control" type="number" placeholder="Digite o código do animal que foi adotado"
+                        required name="codAnimExc" id="codAnimExc" style="display:none">
+                    <br>
+                    <input class="btn btn-info btn-block" type="submit" value="Confirmar exclusão" id="confirmExcl"
+                        style="display:none">
                 </form>
             </div>
         </div>
     </div>
 
+    <script>
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script type="text/javascript">
 
         var chaves;
+
         function carregarAnimais() {
             let email = sessionStorage.getItem("email");
             axios.get(`../../controller/Get.php?animais_de=${email}`)
@@ -127,6 +155,7 @@
                     console.log(error);
                 });
         }
+
         function mostrarDados(animais) {
             let lista = document.querySelector(".card-body");
             animais.forEach(animal => {
@@ -146,8 +175,9 @@
                     }
                     lista.appendChild(item);
                 }
-            })
+            });
         }
+
         function mostrarForm() {
             document.getElementById('cadAnimal').removeAttribute('style');
             document.getElementById('nomeAnimal').removeAttribute('style');
@@ -162,14 +192,33 @@
             document.getElementById('objReprod').removeAttribute('style');
             document.getElementById('objReprodLabel').removeAttribute('style');
             document.getElementById('imagemInput').removeAttribute('style');
+            document.getElementById('formNew').removeAttribute('style');
+
+            document.getElementById('codAnimExc').setAttribute('style', 'display: none');
+            document.getElementById('formExc').setAttribute('style', 'display: none');
+            document.getElementById('confirmExcl').setAttribute('style', 'display: none');
         }
 
         function formRemover() {
+            document.getElementById('cadAnimal').setAttribute('style', 'display: none');
+            document.getElementById('nomeAnimal').setAttribute('style', 'display: none');
+            document.getElementById('idadeAnimal').setAttribute('style', 'display: none');
+            document.getElementById('descAnimal').setAttribute('style', 'display: none');
+            document.getElementById('especAnimal').setAttribute('style', 'display: none');
+            document.getElementById('sexoAnimal').setAttribute('style', 'display: none');
+            document.getElementById('racaAnimal').setAttribute('style', 'display: none');
+            document.getElementById('objAdocLabel').setAttribute('style', 'display: none');
+            document.getElementById('obj').setAttribute('style', 'display: none');
+            document.getElementById('objAdoc').setAttribute('style', 'display: none');
+            document.getElementById('objReprod').setAttribute('style', 'display: none');
+            document.getElementById('objReprodLabel').setAttribute('style', 'display: none');
+            document.getElementById('imagemInput').setAttribute('style', 'display: none');
+            document.getElementById('formNew').setAttribute('style', 'display: none');
+
+            document.getElementById('formExc').removeAttribute('style');
             document.getElementById('codAnimExc').removeAttribute('style');
             document.getElementById('confirmExcl').removeAttribute('style');
         }
-
-    </script>
 
     </script>
 
