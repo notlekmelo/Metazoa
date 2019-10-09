@@ -50,21 +50,21 @@ if (isset($_GET['animaisLocal'])) {
     $AnimaisJson = $AnimaisJson . "]";
     echo $AnimaisJson;
 } else {
-    responseErro("Requisição inválida");
+    responseErro("Requisição inválida.");
 }
 
 
 function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua)
 {
-    $response['nome do animal'] = $nomeAn;
+    $response['nome'] = $nomeAn;
     $response['especie'] = $Especie;
-    $response['raça'] = $Raca;
-    $response['descrição'] = $Desc;
+    $response['raca'] = $Raca;
+    $response['descricao'] = $Desc;
     $response['objetivo'] = $objetivo;
     $response['sexo'] = $Sexo;
     $response['idade'] = $idade;
     $response['contato']= $dono;
-    $response['nome do dono'] = $nomeDono;
+    $response['dono'] = $nomeDono;
     $response['cidade'] = $cidade;
     $response['rua'] = $rua;
 
