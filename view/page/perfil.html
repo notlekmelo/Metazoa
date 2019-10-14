@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="convite.html">
                         <img src="../image/email.png">
                         <span>Convites</span>
                     </a>
@@ -124,8 +124,8 @@
 
             axios.get(`../../controller/Get.php?${tipo}_id=${email}`)
                 .then(response => {
-                        mostrarDados(response.data)
-                  
+                    mostrarDados(response.data)
+
                 })
                 .catch(error => {
                     alert("Erro na requisição.");
@@ -134,18 +134,21 @@
         }
 
         function mostrarDados(usuario) {
-            let lista = document.querySelector("#dadosUser");
+            if (usuario.nome) {
+                let lista = document.querySelector("#dadosUser");
 
-            chaves = Object.keys(usuario);
-            let valores = Object.values(usuario);
+                chaves = Object.keys(usuario);
+                let valores = Object.values(usuario);
 
-            for (let i = 0; i < chaves.length; i++) {
-                let item = document.createElement("li");
-                item.className = "list-group-item";
-                let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
-                lista.appendChild(item);
-            }
+                for (let i = 0; i < chaves.length; i++) {
+                    let item = document.createElement("li");
+                    item.className = "list-group-item";
+                    let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                    item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                    lista.appendChild(item);
+                }
+            } else
+                alert("Erro ao carregar usuário.")
         }
 
         function listarCampos() {

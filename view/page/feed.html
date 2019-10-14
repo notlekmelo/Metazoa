@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="convite.html">
                         <img src="../image/email.png">
                         <span>Convites</span>
                     </a>
@@ -62,9 +62,18 @@
     <div class="container">
         <div class="card shadow">
             <div class=" card-body">
-                <h6 class="color-title">Animais na região:</h6>
-                <ul id="listaAnimais" class="list-group"></ul>
-                <br>
+                <div class="row">
+                    <div class="col">
+                        <h6 class="color-title text-center">Animais na região:</h6>
+                        <ul id="listaAnimais" class="list-group"></ul>
+                        <br>
+                    </div>
+                    <div class="col">
+                        <h6 class="color-title text-center">Eventos na região:</h6>
+                        <ul id="listaEventos" class="list-group"></ul>
+                        <br>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -74,7 +83,6 @@
     <script type="text/javascript">
 
         function carregarFeed() {
-            loading(true);
 
             let tipo = sessionStorage.getItem("tipo");
             let email = sessionStorage.getItem("email");
@@ -82,6 +90,7 @@
             axios.get(`../../controller/Get.php?${tipo}_id=${email}`)
                 .then(response => {
                     carregarAnimais(response.data.estado);
+                    carregarEventos(response.data.estado);
                 })
                 .catch(error => {
                     erro("usuário");
@@ -92,20 +101,31 @@
         function carregarAnimais(local) {
             if (local) {
                 axios.get(`../../controller/GetAll.php?animaisLocal=${local}`)
-                    .then(response => mostrarAnimais(response.data))
+                    .then(response => mostrarDados(response.data, 'Animais'))
                     .catch(error => {
                         erro("animais");
                         console.log(error);
                     });
-            } else erro();
+            } else erro("animais");
         }
 
-        function mostrarAnimais(animais) {
-            if (animais) {
-                let lista = document.querySelector("#listaAnimais");
-                animais.forEach(animal => {
-                    let chaves = Object.keys(animal);
-                    let valores = Object.values(animal);
+        function carregarEventos(local) {
+            if (local) {
+                axios.get(`../../controller/GetAll.php?eventosLocal=${local}`)
+                    .then(response => mostrarDados(response.data, 'Eventos'))
+                    .catch(error => {
+                        erro("eventos");
+                        console.log(error);
+                    });
+            } else erro("eventos");
+        }
+
+        function mostrarDados(lista, categoria) {
+            if (lista) {
+                let lista = document.querySelector(`#lista${categoria}`);
+                animais.forEach(elemento => {
+                    let chaves = Object.keys(elemento);
+                    let valores = Object.values(elemento);
                     for (let i = 0; i < chaves.length; i++) {
                         let item = document.createElement("li");
                         item.className = "list-group-item";
@@ -121,26 +141,27 @@
                         lista.appendChild(item);
                     }
                 })
-                loading(false);
             } else erro();
         }
 
         function erro(mensagem = "dados") {
-            let load = document.querySelector("#loading");
-            load.innerHTML = `<b>Erro ao carregar ${mensagem}.</b>`;
+            alert(`Erro ao carregar ${mensagem}.`);
         }
 
-        function loading(visible) {
-            if (visible == true) {
-                let lista = document.querySelector("#listaAnimais");
-                let item = document.createElement("li");
-                item.setAttribute("id", "loading");
-                item.className = "list-group-item text-center";
-                item.innerHTML = "<b>Carregando...</b>";
-                lista.appendChild(item);
-            } else
-                document.querySelector("#loading").remove();
-        }
+        // function loading(visible) {
+        //     if (visible == true) {
+        //         let listaAnimais = document.querySelector("#listaAnimais");
+        //         let listaEventos = document.querySelector("#listaEventos");
+        //         let item = document.createElement("li");
+        //         item.className = "loading list-group-item text-center";
+        //         item.innerHTML = "<b>Carregando...</b>";
+        //         listaAnimais.appendChild(item);
+        //         //listaEventos.appendChild(item);
+        //     } else {
+        //         let loads = document.getElementsByClassName(loading);
+        //         loads.forEach(load => load.remove());
+        //     }
+        // }
 
     </script>
 
