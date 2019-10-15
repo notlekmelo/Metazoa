@@ -55,6 +55,12 @@
                         <span>Perfil</span>
                     </a>
                 </li>
+                <li id="eventPage" class="nav-item px-3">
+                    <a class="nav-link" href="eventos.html">
+                        <img src="../image/calendar.png">
+                        <span>Eventos</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -106,7 +112,7 @@
                         erro("animais");
                         console.log(error);
                     });
-            } else erro("animais");
+            } else erro("região (animais)");
         }
 
         function carregarEventos(local) {
@@ -117,13 +123,13 @@
                         erro("eventos");
                         console.log(error);
                     });
-            } else erro("eventos");
+            } else erro("região (eventos)");
         }
 
-        function mostrarDados(lista, categoria) {
-            if (lista) {
+        function mostrarDados(array, categoria) {
+            if (array) {
                 let lista = document.querySelector(`#lista${categoria}`);
-                animais.forEach(elemento => {
+                array.forEach(elemento => {
                     let chaves = Object.keys(elemento);
                     let valores = Object.values(elemento);
                     for (let i = 0; i < chaves.length; i++) {

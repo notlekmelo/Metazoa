@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Metazoa | Animais</title>
+    <title>Metazoa | Eventos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../style/basic.css">
 </head>
 
-<body onload="carregarAnimais()">
+<body onload="carregarEventos()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-color shadow-sm">
         <a class="navbar-brand" href="../../index.html">
             <img width="100" class="d-inline-block align-top" src="../image/logo1.png">
@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" selected href="#">
+                    <a class="nav-link" href="animais.html">
                         <img src="../image/pet.png">
                         <span>Animais</span>
                     </a>
@@ -55,8 +55,8 @@
                         <span>Perfil</span>
                     </a>
                 </li>
-                <li id="eventPage" class="nav-item px-3">
-                    <a class="nav-link" href="eventos.html">
+                <li class="nav-item px-3">
+                    <a class="nav-link" selected href="#">
                         <img src="../image/calendar.png">
                         <span>Eventos</span>
                     </a>
@@ -69,67 +69,43 @@
         <div class="card shadow">
             <div class="card-body">
                 <div class="btn-group btn-block">
-                    <button class="btn btn-success col-6" onclick=mostrarForm()>Novo animal</button>
+                    <button class="btn btn-success col-6" onclick=formNovo()>Novo evento</button>
                     <button class="btn btn-primary col-6" onclick=fecharForms()>Fechar formulário</button>
                 </div>
                 <br>
-                <form id="formNew" action="../../controller/Register.php" style="display:none" autocomplete="off"
-                    method="POST">
+                <form id="formNew" action="../../controller/Register.php" autocomplete="off" method="POST"
+                    style="display:none">
                     <br>
-                    <input class="form-control" type="text" placeholder="Digite o nome do animal" name="nomeAnimal">
+                    <input class="form-control" type="text" placeholder="Digite o nome do evento" name="nomeEvento">
                     <br />
-                    <input class="form-control" type="text" placeholder="Digite a espécie do animal" name="especAnimal"
+                    <input class="form-control" type="text" placeholder="Digite a descrição do evento" name="descEvento"
                         required>
                     <br />
-                    <input class="form-control" type="text" placeholder="Digite a raça do animal" name="racaAnimal">
-                    <br />
-                    <select class="form-control" name="sexo" id="sexoAnimal" required>
-                        <option value="" disabled selected hidden>Selecione o sexo do animal</option>
-                        <option value="M">Macho</option>
-                        <option value="F">Fêmea</option>
-                        <option value="NS">Não identificado</option>
-                    </select>
+                    <input class="form-control" type="text" placeholder="Digite o local do evento" name="localEvento">
                     <br />
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="arquivo">
-                        <label class="custom-file-label" for="customFileLang">Selecione uma imagem do animal</label>
+                        <input type="file" class="custom-file-input" name="imagemEvento">
+                        <label class="custom-file-label" for="customFileLang">Selecione uma imagem do evento</label>
                     </div>
                     <br /> <br>
-                    <input class="form-control" type="text" placeholder="Digite a descrição do animal"
-                        name="descAnimal">
+                    <input class="form-control" type="date" placeholder="Digite a data do evento" name="dataEvento">
                     <br />
-                    <input class="form-control" type="text" placeholder="Digite a idade do animal" name="idadeAnimal">
+                    <input class="form-control" type="time" placeholder="Digite a hora do evento" name="horaEvento">
                     <br />
-                    <label class="w-100 text-center" for="obj" style="display:none" id="obj">Este animal é para adoção
-                        ou reprodução?</label>
-                    <br />
-                    <div class="d-flex justify-content-center">
-                        <div>
-                            <input type="radio" id="objAdoc" value="adoção" name="objetivoAnimal"
-                                class="objetivoAnimal">
-                            <label for="Adoção"><b>Adoção</b></label>
-                        </div>
-                        <div class="ml-5">
-                            <input type="radio" value="reprodução" id="objReprod" name="objetivoAnimal"
-                                class="objetivoAnimal">
-                            <label for="reproducao"><b>Reprodução</b></label>
-                        </div>
-                    </div>
-
-                    <br>
                     <input class="btn btn-info btn-block" type="submit" value="Cadastrar">
                 </form>
                 <br>
-                <form action="../../controller/Update.php" method="POST" autocomplete="off" id="formEdit"
+                <form id="formEdit" action="../../controller/Update.php" method="POST" autocomplete="off"
                     style="display:none;">
                     <div class="row">
-                        <input id="nomeAnimalAlt" class="form-control" type="text" name="nomeAnimal" disabled>
+                        <input id="nomeEventoAlt" class="form-control" type="text" name="nomeEvento" disabled>
                     </div>
                     <div class="row">
-                        <input id="codAnimal" class="form-control" type="number" name="codigo" required readonly>
+                        <input id="codEventoAlt" class="form-control" type="number" name="codigoEvento" required
+                            readonly>
                     </div>
                     <div class="row">
-                        <select id="listaCampos" class="form-control" type="text" name="alteracaoAnimal" required>
+                        <select id="listaCampos" class="form-control" type="text" name="alteracaoEvento" required>
                             <option value="" disabled hidden selected>Campo a ser alterado</option>
                         </select>
                     </div>
@@ -141,14 +117,16 @@
                     </div>
                 </form>
 
-                <form id="formExc" action="../../controller/Delete.php" method="POST" style="display:none"
-                    autocomplete="off">
+                <form id="formExc" action="../../controller/Delete.php" method="POST" autocomplete="off"
+                    style="display:none">
                     <div class="row">
-                        <input id="nomeAnimalExc" class="form-control" type="text" name="nomeAnimal" disabled>
+                        <input id="nomeEventoExc" class="form-control" type="text" name="nomeEvento" disabled>
                     </div>
                     <div class="row">
-                        <input class="form-control" type="number" readonly required name="codAnimExc" id="codAnimExc">
+                        <input id="codEventoExc" class="form-control" type="number" readonly required
+                            name="codigoEvento">
                     </div>
+
                     <div class="row">
                         <input class="btn btn-info btn-block" type="submit" value="Confirmar exclusão">
                     </div>
@@ -170,9 +148,9 @@
 
         var chaves;
 
-        function carregarAnimais() {
+        function carregarEventos() {
             let email = sessionStorage.getItem("email");
-            axios.get(`../../controller/Get.php?animais_de=${email}`)
+            axios.get(`../../controller/Get.php?eventos_de=${email}`)
                 .then(response => {
                     mostrarDados(response.data)
                 })
@@ -182,47 +160,49 @@
                 });
         }
 
-        function mostrarDados(animais) {
-            let lista = document.querySelector(".card-body");
-            animais.forEach(animal => {
-                var { codigo, nome } = animal;
-                chaves = Object.keys(animal);
-                let valores = Object.values(animal);
-                for (let i = 0; i < chaves.length; i++) {
-                    let item = document.createElement("li");
-                    item.className = "list-group-item";
-                    if (i == 0) {
-                        item.classList.add("text-center");
-                        item.setAttribute("style", "color: black");
-                        item.innerHTML = `<b>${valores[i]}</b>`;
+        function mostrarDados(eventos) {
+            if (eventos) {
+                let lista = document.querySelector(".card-body");
+                eventos.forEach(evento => {
+                    var { codigo, nome } = evento;
+                    chaves = Object.keys(evento);
+                    let valores = Object.values(evento);
+                    for (let i = 0; i < chaves.length; i++) {
+                        let item = document.createElement("li");
+                        item.className = "list-group-item";
+                        if (i == 0) {
+                            item.classList.add("text-center");
+                            item.setAttribute("style", "color: black");
+                            item.innerHTML = `<b>${valores[i]}</b>`;
+                        }
+                        else {
+                            let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                            item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                        }
+                        lista.appendChild(item);
                     }
-                    else {
-                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
-                    }
-                    lista.appendChild(item);
-                }
 
-                let div = document.createElement('li');
-                div.classList.add('btn-group', 'btn-block', 'list-group-item');
-                let btnExc = document.createElement('button');
-                btnExc.classList.add('btn', 'btn-danger', 'col-6');
-                btnExc.setAttribute('onClick', `formRemover(${codigo}, '${nome}')`);
-                btnExc.innerHTML = 'Excluir';
-                let btnAlt = document.createElement('button');
-                btnAlt.classList.add('btn', 'btn-secondary', 'col-6');
-                btnAlt.setAttribute('onClick', `formEdit(${codigo}, '${nome}')`);
-                btnAlt.innerHTML = 'Editar';
+                    let div = document.createElement('li');
+                    div.classList.add('btn-group', 'btn-block', 'list-group-item');
+                    let btnExc = document.createElement('button');
+                    btnExc.classList.add('btn', 'btn-danger', 'col-6');
+                    btnExc.setAttribute('onClick', `formRemover(${codigo}, '${nome}')`);
+                    btnExc.innerHTML = 'Excluir';
+                    let btnAlt = document.createElement('button');
+                    btnAlt.classList.add('btn', 'btn-secondary', 'col-6');
+                    btnAlt.setAttribute('onClick', `formEdit(${codigo}, '${nome}')`);
+                    btnAlt.innerHTML = 'Editar';
 
-                div.appendChild(btnAlt);
-                div.appendChild(btnExc);
+                    div.appendChild(btnAlt);
+                    div.appendChild(btnExc);
 
-                lista.appendChild(div);
-            });
-            listarCampos();
+                    lista.appendChild(div);
+                });
+                listarCampos();
+            } else alert("Erro ao carregar eventos.")
         }
 
-        function mostrarForm() {
+        function formNovo() {
             fecharForms();
             document.getElementById('formNew').removeAttribute('style');
         }
@@ -230,20 +210,20 @@
         function formRemover(codigo, nome) {
             fecharForms();
             document.getElementById('formExc').removeAttribute('style');
-            document.getElementById('codAnimExc').value = codigo;
-            document.getElementById('nomeAnimalExc').value = nome;
+            document.getElementById('codEventoExc').value = codigo;
+            document.getElementById('nomeEventoExc').value = nome;
         }
 
         function formEdit(codigo, nome) {
             fecharForms();
             document.getElementById("formEdit").removeAttribute("style");
-            document.getElementById("codAnimal").value = codigo;
-            document.getElementById('nomeAnimalAlt').value = nome;
+            document.getElementById("codEventoAlt").value = codigo;
+            document.getElementById('nomeEventoAlt').value = nome;
         }
 
         function fecharForms() {
-            document.getElementById('formExc').setAttribute('style', 'display: none');
             document.getElementById('formNew').setAttribute('style', 'display: none');
+            document.getElementById("formExc").setAttribute('style', 'display: none');
             document.getElementById("formEdit").setAttribute('style', 'display: none');
         }
 
