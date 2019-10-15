@@ -64,7 +64,7 @@
             <div class="card-body">
                 <div class="btn-group btn-block">
                     <button class="btn btn-success col-6" onclick=mostrarForm()>Novo animal</button>
-                    <button class="btn btn-dark col-6" onclick=fecharForms()>Fechar form</button>
+                    <button class="btn btn-dark col-6" onclick=fecharForms()>Fechar edição</button>
                 </div>
                 <br>
                 <form id="formNew" action="../../controller/Register.php" style="display:none" autocomplete="off"
@@ -81,13 +81,13 @@
                     <br />
                     <select class="form-control" name="sexo" id="sexoAnimal" required style="display:none">
                         <option value="" disabled selected hidden>Selecione o sexo do animal</option>
-                        <option value="Macho">Macho</option>
-                        <option value="Fêmea">Fêmea</option>
-                        <option value="Não se sabe">Não identificado</option>
+                        <option value="M">Macho</option>
+                        <option value="F">Fêmea</option>
+                        <option value="NS">Não identificado</option>
                     </select>
                     <br />
                     <div class="custom-file" id="imagemInput" style="display:none">
-                        <input type="file" class="custom-file-input">
+                        <input type="file" class="custom-file-input" name="arquivo">
                         <label class="custom-file-label" for="customFileLang">Selecione uma imagem do animal</label>
                     </div>
                     <br /> <br>

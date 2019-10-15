@@ -2,6 +2,7 @@
 require_once "../model/Pessoa.php";
 require_once "../model/Instituicao.php";
 require_once "../model/Animal.php";
+require_once "../model/Evento.php";
 require_once "../repository/Database.php";
 session_start();
 
@@ -30,5 +31,9 @@ if (isset($_POST["nomePessoa"])) {
     $animal = new Animal($_POST['nomeAnimal'],$_SESSION['logado'],$_POST['sexo'],$_POST['especAnimal'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
     $bd->inserirAnimal($animal, $novo_nome);
     header('Location: ../view/page/perfil.html');
-
+    }
+}else if(isset($_POST['nomeEvento'])){
+    $evento = new Evento($_POST['nomeEvento'],$_POST['descricao'],$_POST['data'],$_POST['hora'],$_SESSION['logado'],$_POST['local']);
+    $bd->inserirEvento($evento);
+    header('Location: ../view/page/feed.html');
 }

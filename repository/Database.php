@@ -89,6 +89,21 @@ class Database
         }
     }
 
+    function inserirEvento($evento){
+        $this->connect();
+        $this->query = "insert into evento (Nome, Data, Horario,Descricao,Local,Instituicao) values ( $evento->getNome(), $evento->getData(), $evento->getHora(),$evento->getDesc(),$evento->getLocal(),$evento->getCanil()) ";
+        if ($this->result = mysqli_query($this->link, $this->query)) {
+            $this->disconnect();
+            return $this->result;
+        } else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
     function login($email,$senha,$tipo){
         $this->connect();
         $this->query = "SELECT * from ".$tipo." where Email = '".$email."' and Senha = '".$senha."';";
@@ -121,25 +136,39 @@ class Database
         return $resposta;
         }
 
-
-        // Essa função deve ser apromorada com join que só pega os animais cujos donos atuais estão em seu estado.
-    function getAllState($estado){
-        $this->connect();
-        $this->query = "SELECT * from pessoa where Estado = '".$estado."';";
-        $this->result = mysqli_query($this->link, $this->query);
-        $total = mysqli_num_rows($this->result);
-        $lista = array();
-        while($total > 0){
-            array_push($lista, mysqli_fetch_assoc($this->result));
-            $total = $total - 1;
-        }
-        $this->disconnect();
-        return $lista;
-    }
-
     function updateCampo($tabela,$campo,$valor,$email){
         $this->connect();
         $this->query = "Update ".$tabela." SET ".$campo." = '".$valor."' where Email = '".$email."';";
+        if($this->result = mysqli_query($this->link, $this->query)){
+            $this->disconnect();
+        }
+        else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
+    function updateAnimal($campo,$valor,$id){
+        $this->connect();
+        $this->query = "Update animal set " . $campo ." = '".$valor."' where Codigo = '" . $id ."';";
+        if($this->result = mysqli_query($this->link, $this->query)){
+            $this->disconnect();
+        }
+        else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
+    function updateEvento($campo,$valor,$id){
+        $this->connect();
+        $this->query = "Update evento set " . $campo ." = '".$valor."' where Codigo = '" . $id ."';";
         if($this->result = mysqli_query($this->link, $this->query)){
             $this->disconnect();
         }
@@ -181,6 +210,21 @@ class Database
                   disconnect();
               }
       }
+    
+    function excluirEvento($codEvento){
+        $this->connect();
+        $this->query = "Delete from evento where Codigo= '".$codEvento."';";
+        if($this->result = mysqli_query($this->link, $this->query)){
+            $this->disconnect();
+        }
+        else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
 
     function disconnect(){
         return mysqli_close($this->link);

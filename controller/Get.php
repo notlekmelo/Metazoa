@@ -64,6 +64,29 @@ if (isset($_GET['pessoa_id'])) {
     mysqli_close($con);
     $AnimaisJson = $AnimaisJson . "]";
     echo $AnimaisJson;
+}else if (isset($_GET['eventos_de'])) {
+    $db = new Database();
+    $con = $db->connect();
+    $dono = $_GET['eventos_de'];
+    $EventosJson = "[";
+    $result = mysqli_query($con, "SELECT * FROM `evento` WHERE Instituicao='$dono' ");
+    $qtd = mysqli_num_rows($result);
+    while ($qtd > 0) {
+        $row = mysqli_fetch_array($result);
+        $nomeEv = $row['Nome'];
+        $cod = $row['Codigo'];
+        $desc = $row['Descricao'];
+        $data = $row['Data'];
+        $hora = $row['Horario'];
+        $local = $row['Local'];
+        if ($qtd - 1 > 0)
+            $EventosJson = $EventosJson . responseEventos($nomeEv, $desc,$cod ,$data, $hora, $local) . ",";
+        else $EventosJson = $EventosJson . responseEventos($nomeEv, $desc,$cod ,$data, $hora, $local);
+        $qtd = $qtd - 1;
+    }
+    mysqli_close($con);
+    $EventosJson = $EventosJson . "]";
+    echo $EventosJson;
 } else {
     responseErro("Requisição inválida.");
 }
@@ -108,6 +131,19 @@ function responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo
     $response['objetivo'] = $objetivo;
     $response['sexo'] = $Sexo;
     $response['idade'] = $idade;
+
+    $json_response = json_encode($response);
+    return $json_response;
+}
+
+function responseEventos($nomeEv,$desc,$cod, $data, $hora, $local)
+{
+    $response['nome'] = $nomeEv;
+    $response['codigo'] = $cod;
+    $response['descricao'] = $desc;
+    $response['data'] = $data;
+    $response['horario'] = $hora;
+    $response['local'] = $local;
 
     $json_response = json_encode($response);
     return $json_response;

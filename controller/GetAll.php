@@ -49,7 +49,31 @@ if (isset($_GET['animaisLocal'])) {
     mysqli_close($con);
     $AnimaisJson = $AnimaisJson . "]";
     echo $AnimaisJson;
-} else {
+} else if (isset($_GET['eventosLocal'])) {
+    $db = new Database();
+    $con = $db->connect();
+    $EventosJson = "[";
+    $local = $_GET['eventosLocal'];
+    $resultInst = mysqli_query($con, "SELECT evento.*, instituicao.Nome, instituicao.CNPJ FROM `animal` INNER JOIN instituicao ON evento.Instituicao = instituicao.Email WHERE instituicao.Estado = '$local'");
+    $qtd = mysqli_num_rows($resultInst);
+    while ($qtd > 0) {
+        $row = mysqli_fetch_array($resultInst);
+        $nomeEv = $row['NomeEvento'];
+        $dono = $row['Nome'];
+        $cnpj = $row['CNPJ'];
+        $Desc = $row['Descricao'];
+        $data = $row['Data'];
+        $hora = $row['Horario'];
+        $local = $row['Local'];
+        if($qtd - 1 > 0)
+            $EventosJson = $EventosJson . responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora) . ",";
+        else $EventosJson = $EventosJson . responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora);
+        $qtd = $qtd - 1;
+    }
+    mysqli_close($con);
+    $EventosJson = $EventosJson . "]";
+    echo $EventosJson;
+    }else {
     responseErro("Requisição inválida.");
 }
 
@@ -67,6 +91,21 @@ function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idad
     $response['dono'] = $nomeDono;
     $response['cidade'] = $cidade;
     $response['rua'] = $rua;
+
+    $json_response = json_encode($response);
+    return $json_response;
+}
+
+function responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora)
+{
+    
+    $response['nome do Evento'] = $nomeEv;
+    $response['responsável'] = $dono;
+    $response['cNPJ'] = $cnpj;
+    $response['descricao'] = $Desc;
+    $response['data'] = $data;
+    $response['horario'] = $hora;
+    $response['local'] = $local;
 
     $json_response = json_encode($response);
     return $json_response;
