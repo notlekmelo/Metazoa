@@ -54,7 +54,7 @@ if (isset($_GET['animaisLocal'])) {
     $con = $db->connect();
     $EventosJson = "[";
     $local = $_GET['eventosLocal'];
-    $resultInst = mysqli_query($con, "SELECT evento.*, instituicao.Nome, instituicao.CNPJ FROM `animal` INNER JOIN instituicao ON evento.Instituicao = instituicao.Email WHERE instituicao.Estado = '$local'");
+    $resultInst = mysqli_query($con, "SELECT evento.*, instituicao.Nome, instituicao.CNPJ FROM `evento` INNER JOIN instituicao ON evento.Instituicao = instituicao.Email WHERE instituicao.Estado = '$local'");
     $qtd = mysqli_num_rows($resultInst);
     while ($qtd > 0) {
         $row = mysqli_fetch_array($resultInst);
