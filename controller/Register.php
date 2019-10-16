@@ -31,7 +31,6 @@ if (isset($_POST["nomePessoa"])) {
     $animal = new Animal($_POST['nomeAnimal'],$_SESSION['logado'],$_POST['sexo'],$_POST['especAnimal'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
     $bd->inserirAnimal($animal);
     header('Location: ../view/page/perfil.html');
-    }
 }else if(isset($_POST['nomeEvento'])){
     $evento = new Evento($_POST['nomeEvento'],$_POST['descEvento'],$_POST['dataEvento'],$_POST['horaEvento'],$_SESSION['logado'],$_POST['localEvento']);
     $bd->inserirEvento($evento);

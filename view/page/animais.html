@@ -171,6 +171,7 @@
         var chaves;
 
         function carregarAnimais() {
+            let tipo = sessionStorage.getItem("tipo");
             if(tipo == "instituicao")
                 document.getElementById("eventPage").removeAttribute("style");
             let email = sessionStorage.getItem("email");
