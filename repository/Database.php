@@ -91,7 +91,7 @@ class Database
 
     function inserirEvento($evento){
         $this->connect();
-        $this->query = "insert into evento (Nome, Data, Horario,Descricao,Local,Instituicao) values ( $evento->getNome(), $evento->getData(), $evento->getHora(),$evento->getDesc(),$evento->getLocal(),$evento->getCanil()) ";
+        $this->query = "insert into evento (NomeEvento, Data, Horario,Descricao,Local,Instituicao) values ('" .$evento->getNome()."','". $evento->getData()."','". $evento->getHora()."','".$evento->getDesc()."','".$evento->getLocal()."','".$evento->getCanil()."') ";
         if ($this->result = mysqli_query($this->link, $this->query)) {
             $this->disconnect();
             return $this->result;

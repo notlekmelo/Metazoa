@@ -19,3 +19,8 @@ else if(isset($_POST['codAnimExc'])){
     $bd->excluirAnimal($_POST['codAnimExc']);
     header('Location: ../view/page/animais.html');
 }
+else if(isset($_POST['codigoEvento'])){
+    $bd->excluirEvento($_POST['codigoEvento']);
+    header('Location: ../view/page/eventos.html');
+}
+?>

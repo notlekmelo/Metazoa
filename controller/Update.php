@@ -11,9 +11,10 @@ if (isset($_POST["alteracaoUsuario"])) {
     header('Location: ../view/page/perfil.html');
 }
 else if(isset($_POST["alteracaoAnimal"])){
-    $bd->updateAnimal($_POST['alteracaoAnimal'],$_POST["valorInput"],$_POST["codigo"]);
+    $bd->updateAnimal($_POST['alteracaoAnimal'],$_POST["novoValor"],$_POST["codigo"]);
     header('Location: ../view/page/animais.html');
 } else if(isset($_POST['alteracaoEvento'])){
-    $bd->updateEvento($_POST['alteracaoEvento'],$_POST["valorInput"],$_POST["codigo"]);
-    //header('Location: ../view/page/animais.html');
+    $bd->updateEvento($_POST['alteracaoEvento'],$_POST["novoValor"],$_POST["codigoEvento"]);
+    header('Location: ../view/page/eventos.html');
 }
+?>

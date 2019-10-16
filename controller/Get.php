@@ -73,7 +73,7 @@ if (isset($_GET['pessoa_id'])) {
     $qtd = mysqli_num_rows($result);
     while ($qtd > 0) {
         $row = mysqli_fetch_array($result);
-        $nomeEv = $row['Nome'];
+        $nomeEv = $row['NomeEvento'];
         $cod = $row['Codigo'];
         $desc = $row['Descricao'];
         $data = $row['Data'];

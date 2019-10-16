@@ -55,7 +55,7 @@
                         <span>Perfil</span>
                     </a>
                 </li>
-                <li id="eventPage" class="nav-item px-3">
+                <li id="eventPage" class="nav-item px-3" style="display:none;">
                     <a class="nav-link" href="eventos.html">
                         <img src="../image/calendar.png">
                         <span>Eventos</span>
@@ -91,6 +91,8 @@
         function carregarFeed() {
 
             let tipo = sessionStorage.getItem("tipo");
+            if(tipo == "instituicao")
+                document.getElementById("eventPage").removeAttribute("style");
             let email = sessionStorage.getItem("email");
 
             axios.get(`../../controller/Get.php?${tipo}_id=${email}`)

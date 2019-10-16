@@ -33,7 +33,8 @@ if (isset($_POST["nomePessoa"])) {
     header('Location: ../view/page/perfil.html');
     }
 }else if(isset($_POST['nomeEvento'])){
-    $evento = new Evento($_POST['nomeEvento'],$_POST['descricao'],$_POST['data'],$_POST['hora'],$_SESSION['logado'],$_POST['local']);
+    $evento = new Evento($_POST['nomeEvento'],$_POST['descEvento'],$_POST['dataEvento'],$_POST['horaEvento'],$_SESSION['logado'],$_POST['localEvento']);
     $bd->inserirEvento($evento);
     header('Location: ../view/page/feed.html');
 }
+?>
