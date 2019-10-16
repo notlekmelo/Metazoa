@@ -63,6 +63,12 @@
                         <span>Eventos</span>
                     </a>
                 </li>
+                <li class="nav-item px-3" onclick="fazerLogout()">
+                    <a class="nav-link" href="../../index.html">
+                        <img src="../image/power.png">
+                        <span>Sair</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -126,7 +132,7 @@
         function carregarUsuario() {
 
             let tipo = sessionStorage.getItem("tipo");
-            if(tipo == "instituicao")
+            if (tipo == "instituicao")
                 document.getElementById("eventPage").removeAttribute("style");
             let email = sessionStorage.getItem("email");
 
@@ -206,6 +212,12 @@
             document.getElementById("exclusaoUsuario").setAttribute("style", "display:none");
             document.getElementById("cancel").setAttribute("style", "display:none");
         }
+
+        function fazerLogout() {
+            sessionStorage.removeItem('email');
+            sessionStorage.removeItem('tipo');
+        }
+
     </script>
 </body>
 

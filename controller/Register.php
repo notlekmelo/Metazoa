@@ -20,16 +20,16 @@ if (isset($_POST["nomePessoa"])) {
 
 } else if(isset($_POST['nomeAnimal'])){
     $msg = false;
-    if (isset($_FILES['arquivo'])) {
-        $extensao = strtolower(substr($_FILES['arquivo']['name'], -4));//substr() pega o arquivo e corta ele em um pedaço menor
-        $novo_nome = md5(time()).$extensao;//time() retorna a hora atual e md5() criptografa a informação
-        $diretorio = "C:/xampp/htdocs/Metazoa/repository/uploadedImages/";
+    // if (isset($_FILES['arquivo'])) {
+    //     $extensao = strtolower(substr($_FILES['arquivo']['name'], -4));//substr() pega o arquivo e corta ele em um pedaço menor
+    //     $novo_nome = md5(time()).$extensao;//time() retorna a hora atual e md5() criptografa a informação
+    //     $diretorio = "C:/xampp/htdocs/Metazoa/repository/uploadedImages/";
 
-        move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio.$novo_nome);//Quando o php recebe um arquivo, ele é automaticamente enviado para uma pasta temporária que existe dentro dos arquivos de sistema do php. Para acessar esta pasta, é usada a função move_uploaded_file().
+    //     move_uploaded_file($_FILES['arquivo']['tmp_name'], $diretorio.$novo_nome);//Quando o php recebe um arquivo, ele é automaticamente enviado para uma pasta temporária que existe dentro dos arquivos de sistema do php. Para acessar esta pasta, é usada a função move_uploaded_file().
 
     
     $animal = new Animal($_POST['nomeAnimal'],$_SESSION['logado'],$_POST['sexo'],$_POST['especAnimal'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
-    $bd->inserirAnimal($animal, $novo_nome);
+    $bd->inserirAnimal($animal);
     header('Location: ../view/page/perfil.html');
     }
 }else if(isset($_POST['nomeEvento'])){
