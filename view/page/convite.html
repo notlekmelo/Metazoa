@@ -69,8 +69,8 @@
         <div class="card shadow">
             <div class="card-body">
                 <!-- Inserir conteúdo da página aqui -->
-                <a href="../../controller/GetImg.php?codigo=5">Desisto</a>
-                <img src="../../controller/GetImg.php?codigo=5" />
+                <a href="../../controller/GetImg.php?codAnimal=10">Desisto</a>
+                <img src="../../controller/GetImg.php?codAnimal=10" />
             </div>
         </div>
     </div>
@@ -82,7 +82,7 @@
         function carregarAnimais() {
             if(tipo == "instituicao")
                 document.getElementById("eventPage").removeAttribute("style");
-            axios.get(`../../controller/GetImg.php?codigo=5`)
+            axios.get(`../../controller/GetImg.php?codAnimal=10`)
                 .then(response => {
                     mostrarDados(response.data)
 

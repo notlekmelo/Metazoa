@@ -59,9 +59,9 @@ class Database
         }
     }
 
-    function inserirAnimal($animal){
+    function inserirAnimal($animal,$imagem){
         $this->connect();
-        $this->query = "insert into animal (NomeAnimal,Especie,Raca,Sexo,Descricao,Objetivo,Idade,Dono) values ('" . $animal->getNome() . "','" . $animal->getEspecie() . "','" . $animal->getRaca() . "','" . $animal->getSexo() . "','" . $animal->getDesc() . "','" . $animal->getObjetivo() . "','" . $animal->getIdade() ."','" . $animal->getDono(). "')";
+        $this->query = "insert into animal (NomeAnimal,Especie,Raca,Sexo,Descricao,Objetivo,Idade,Dono,imagemAnimal) values ('" . $animal->getNome() . "','" . $animal->getEspecie() . "','" . $animal->getRaca() . "','" . $animal->getSexo() . "','" . $animal->getDesc() . "','" . $animal->getObjetivo() . "','" . $animal->getIdade() ."','" . $animal->getDono(). "', '". $imagem."')";
         if ($this->result = mysqli_query($this->link, $this->query)) {
             $this->disconnect();
             return $this->result;
