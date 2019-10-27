@@ -23,9 +23,10 @@ if (isset($_GET['animaisLocal'])) {
         $nomeDono = $row['Nome'];
         $cidade = $row['Cidade'];
         $rua = $row['Rua'];
+        $img = $row['imagemAnimal'];
         if($numResults - 1 > 0 || $qtd != 0)
-            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua) . ",";
-        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua);
+            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img) . ",";
+        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img);
         $numResults = $numResults - 1;
     }
     while ($qtd > 0) {
@@ -41,9 +42,10 @@ if (isset($_GET['animaisLocal'])) {
         $nomeDono = $row['Nome'];
         $cidade = $row['Cidade'];
         $rua = $row['Rua'];
+        $img = $row['imagemAnimal'];
         if($qtd - 1 > 0)
-            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua) . ",";
-        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua);
+            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img) . ",";
+        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img);
         $qtd = $qtd - 1;
     }
     mysqli_close($con);
@@ -78,9 +80,10 @@ if (isset($_GET['animaisLocal'])) {
 }
 
 
-function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua)
+function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img)
 {
     $response['nome'] = $nomeAn;
+    $response['imagem'] = $img;
     $response['especie'] = $Especie;
     $response['raca'] = $Raca;
     $response['descricao'] = $Desc;

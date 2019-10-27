@@ -144,7 +144,10 @@
                         }
                         else {
                             let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                            item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                            if(chaveFormat == "Imagem")
+                                item.innerHTML =  `<img src="../../repository/uploadedImages/${valores[i]}" />`;
+                            else
+                                item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
                         }
                         lista.appendChild(item);
                     }

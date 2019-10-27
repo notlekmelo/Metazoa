@@ -56,9 +56,10 @@ if (isset($_GET['pessoa_id'])) {
         $Sexo = $row['Sexo'];
         $objetivo = $row['Objetivo'];
         $idade = $row['Idade'];
+        $img = $row['imagemAnimal'];
         if ($qtd - 1 > 0)
-            $AnimaisJson = $AnimaisJson . responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade) . ",";
-        else $AnimaisJson = $AnimaisJson . responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade);
+            $AnimaisJson = $AnimaisJson . responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade, $img) . ",";
+        else $AnimaisJson = $AnimaisJson . responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade, $img);
         $qtd = $qtd - 1;
     }
     mysqli_close($con);
@@ -121,16 +122,18 @@ function responseInstituicao($instituicao_id, $Nome, $CNPJ, $Telefone, $estado, 
     echo $json_response;
 }
 
-function responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade)
+function responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade,$img)
 {
     $response['nome'] = $nomeAn;
     $response['codigo'] = $cod;
+    $response['imagem'] = $img;
     $response['especie'] = $Especie;
     $response['raca'] = $Raca;
     $response['descricao'] = $Desc;
     $response['objetivo'] = $objetivo;
     $response['sexo'] = $Sexo;
     $response['idade'] = $idade;
+
 
     $json_response = json_encode($response);
     return $json_response;

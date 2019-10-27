@@ -90,7 +90,7 @@
                         <option value="NS">Não identificado</option>
                     </select>
                     <br />
-                     <div class="custom-file">
+                    <div class="custom-file">
                         <input type="file" class="custom-file-input" name="arquivo">
                         <label class="custom-file-label" for="customFileLang">Selecione uma imagem do animal</label>
                     </div>
@@ -172,7 +172,7 @@
 
         function carregarAnimais() {
             let tipo = sessionStorage.getItem("tipo");
-            if(tipo == "instituicao")
+            if (tipo == "instituicao")
                 document.getElementById("eventPage").removeAttribute("style");
             let email = sessionStorage.getItem("email");
             axios.get(`../../controller/Get.php?animais_de=${email}`)
@@ -201,9 +201,13 @@
                     }
                     else {
                         let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                        if(chaveFormat == "Imagem")
+                            item.innerHTML =  `<img src="../../repository/uploadedImages/${valores[i]}" />`;
+                        else
+                            item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
                     }
                     lista.appendChild(item);
+
                 }
 
                 let div = document.createElement('li');
