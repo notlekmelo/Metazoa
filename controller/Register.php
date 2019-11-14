@@ -32,9 +32,16 @@ if (isset($_POST["nomePessoa"])) {
     $bd->inserirAnimal($animal,$novo_nome);
     header('Location: ../view/page/perfil.html');
      }
+}else if(isset($_POST['EspecieInteresse'])){
+    $animal = new Animal('',$_SESSION['logado'],$_POST['sexo'],$_POST['EspecieInteresse'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
+    $bd->inserirInteresse($animal);
 }else if(isset($_POST['nomeEvento'])){
     $evento = new Evento($_POST['nomeEvento'],$_POST['descEvento'],$_POST['dataEvento'],$_POST['horaEvento'],$_SESSION['logado'],$_POST['localEvento']);
     $bd->inserirEvento($evento);
     header('Location: ../view/page/feed.html');
+}else if(isset($_POST['mensagem'])){
+    $bd->inserirMensagem($_SESSION['logado'], $_POST['destinatario'], $_POST['conteudo']);
+}else if(isset($_POST['solicitarConexao'])){
+    $bd->inserirSolicitacao($_SESSION['logado'], $_POST['destinatario']);
 }
 ?>

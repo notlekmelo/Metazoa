@@ -74,6 +74,21 @@ class Database
         }
     }
 
+    function inserirInteresse($animal){
+        $this->connect();
+        $this->query = "insert into interesse (Especie,Raca,Descricao,Sexo,Idade,Objetivo,Interessado) values ('" . $animal->getEspecie() . "','" . $animal->getRaca() . "','" . $animal->getDesc() . "','" . $animal->getSexo() . "','" . $animal->getIdade() ."','" . $animal->getObjetivo() . "','". $animal->getDono(). "' )";
+        if ($this->result = mysqli_query($this->link, $this->query)) {
+            $this->disconnect();
+            return $this->result;
+        } else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
     function inserirMensagem($from, $for, $conteudo){
         $this->connect();
         $this->query = "insert into mensagem (idPessoa, idInstituicao, conteudo) values ( $from, $for, $conteudo) ";
@@ -92,6 +107,21 @@ class Database
     function inserirEvento($evento){
         $this->connect();
         $this->query = "insert into evento (NomeEvento, Data, Horario,Descricao,Local,Instituicao) values ('" .$evento->getNome()."','". $evento->getData()."','". $evento->getHora()."','".$evento->getDesc()."','".$evento->getLocal()."','".$evento->getCanil()."') ";
+        if ($this->result = mysqli_query($this->link, $this->query)) {
+            $this->disconnect();
+            return $this->result;
+        } else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
+    function inserirSolicitacao($from, $for){
+        $this->connect();
+        $this->query = "insert into solicitacao (idInteressado, idReceptor, confirmacao) values ('" .$from."','". $for."', 0 )";
         if ($this->result = mysqli_query($this->link, $this->query)) {
             $this->disconnect();
             return $this->result;
@@ -154,6 +184,21 @@ class Database
     function updateAnimal($campo,$valor,$id){
         $this->connect();
         $this->query = "Update animal set " . $campo ." = '".$valor."' where Codigo = '" . $id ."';";
+        if($this->result = mysqli_query($this->link, $this->query)){
+            $this->disconnect();
+        }
+        else {
+            echo "Ocorreu um erro na execução da SQL";
+            echo "Erro :" . mysqli_error($this->link);
+            echo "SQL: " . $this->query;
+            die();
+            disconnect();
+        }
+    }
+
+    function updateSolicitacao($for, $from){
+        $this->connect();
+        $this->query = "Update solicitacao set `confirmacao` = ". 1 ." where idReceptor = '" . $for ."' and idInteressado = '". $from ."';";
         if($this->result = mysqli_query($this->link, $this->query)){
             $this->disconnect();
         }

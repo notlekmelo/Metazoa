@@ -16,5 +16,7 @@ else if(isset($_POST["alteracaoAnimal"])){
 } else if(isset($_POST['alteracaoEvento'])){
     $bd->updateEvento($_POST['alteracaoEvento'],$_POST["novoValor"],$_POST["codigoEvento"]);
     header('Location: ../view/page/eventos.html');
+}else if(isset($_POST['confirmarSolicitacao'])){
+    $bd->updateSolicitacao($_POST['destinatario'], $_SESSION['logado']);
 }
 ?>
