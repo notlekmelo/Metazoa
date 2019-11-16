@@ -39,7 +39,36 @@ if (isset($_GET['pessoa_id'])) {
     } else {
         responseErro("Nenhum registro encontrado.");
     }
-} else if (isset($_GET['animais_de'])) {
+}else if(isset($_GET['perfil_De'])){
+    $db = new Database();
+    $con = $db->connect();
+    $email = $_GET['perfil_De'];
+    $result = mysqli_query($con, "SELECT * FROM `instituicao` WHERE Email='$email'");
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        $nome = $row['Nome'];
+        $CNPJ = $row['CNPJ'];
+        $Telefone = $row['Telefone'];
+        $estado = $row['Estado'];
+        $cidade = $row['Cidade'];
+        $rua = $row['Rua'];
+        $bairro = $row['Bairro'];
+        $conta = $row['Conta'];
+        mysqli_close($con);
+        responseInstituicao($email, $nome, $CNPJ, $Telefone, $estado, $cidade, $rua, $bairro, $conta);
+}else {
+    $result = mysqli_query($con, "SELECT * FROM `pessoa` WHERE Email='$email'");
+        $row = mysqli_fetch_array($result);
+        $nome = $row['Nome'];
+        $Telefone = $row['Telefone'];
+        $estado = $row['Estado'];
+        $cidade = $row['Cidade'];
+        $rua = $row['Rua'];
+        $bairro = $row['Bairro'];
+        mysqli_close($con);
+        responsePessoa($email, $nome, $Telefone, $estado, $cidade, $rua, $bairro);
+}
+}else if (isset($_GET['animais_de'])) {
     $db = new Database();
     $con = $db->connect();
     $dono = $_GET['animais_de'];
@@ -94,8 +123,8 @@ if (isset($_GET['pessoa_id'])) {
 
 function responsePessoa($pessoa_id, $Nome, $Telefone, $estado, $cidade, $rua, $bairro)
 {
-    $response['e-mail'] = $pessoa_id;
     $response['nome'] = $Nome;
+    $response['e-mail'] = $pessoa_id;
     $response['telefone'] = $Telefone;
     $response['estado'] = $estado;
     $response['cidade'] = $cidade;
@@ -108,8 +137,8 @@ function responsePessoa($pessoa_id, $Nome, $Telefone, $estado, $cidade, $rua, $b
 
 function responseInstituicao($instituicao_id, $Nome, $CNPJ, $Telefone, $estado, $cidade, $rua, $bairro, $conta)
 {
-    $response['e-mail'] = $instituicao_id;
     $response['nome'] = $Nome;
+    $response['e-mail'] = $instituicao_id;
     $response['cnpj'] = $CNPJ;
     $response['telefone'] = $Telefone;
     $response['estado'] = $estado;

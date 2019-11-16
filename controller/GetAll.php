@@ -1,14 +1,17 @@
 <?php
 require_once "../repository/Database.php";
 header("Content-Type:application/json");
+session_start();
+
 if (isset($_GET['animaisLocal'])) {
     $db = new Database();
     $con = $db->connect();
+    $logado = $_SESSION['logado'];
     $AnimaisJson = "[";
     $local = $_GET['animaisLocal'];
-    $result = mysqli_query($con, "SELECT animal.*, pessoa.Nome, pessoa.Cidade, pessoa.Rua  FROM `animal` INNER JOIN `pessoa` ON animal.Dono = pessoa.Email WHERE pessoa.Estado='$local'");
+    $result = mysqli_query($con, "SELECT animal.*, pessoa.Nome, pessoa.Cidade FROM `animal` INNER JOIN `pessoa` ON animal.Dono = pessoa.Email WHERE pessoa.Estado='$local' and pessoa.Email <> '$logado'");
     $numResults = mysqli_num_rows($result);
-    $resultInst = mysqli_query($con, "SELECT animal.*, instituicao.Nome, instituicao.Cidade, instituicao.Rua  FROM `animal` INNER JOIN instituicao ON animal.Dono = instituicao.Email WHERE instituicao.Estado = '$local'");
+    $resultInst = mysqli_query($con, "SELECT animal.*, instituicao.Nome, instituicao.Cidade FROM `animal` INNER JOIN instituicao ON animal.Dono = instituicao.Email WHERE instituicao.Estado = '$local' and instituicao.Email <> '$logado'");
     $qtd = mysqli_num_rows($resultInst);
     while ($numResults > 0) {
         $row = mysqli_fetch_array($result);
@@ -22,11 +25,10 @@ if (isset($_GET['animaisLocal'])) {
         $dono = $row['Dono'];
         $nomeDono = $row['Nome'];
         $cidade = $row['Cidade'];
-        $rua = $row['Rua'];
         $img = $row['imagemAnimal'];
         if($numResults - 1 > 0 || $qtd != 0)
-            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img) . ",";
-        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img);
+            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade, $img) . ",";
+        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade, $img);
         $numResults = $numResults - 1;
     }
     while ($qtd > 0) {
@@ -41,11 +43,10 @@ if (isset($_GET['animaisLocal'])) {
         $dono = $row['Dono'];
         $nomeDono = $row['Nome'];
         $cidade = $row['Cidade'];
-        $rua = $row['Rua'];
         $img = $row['imagemAnimal'];
         if($qtd - 1 > 0)
-            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img) . ",";
-        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img);
+            $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade, $img) . ",";
+        else $AnimaisJson = $AnimaisJson . responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade, $img);
         $qtd = $qtd - 1;
     }
     mysqli_close($con);
@@ -54,9 +55,10 @@ if (isset($_GET['animaisLocal'])) {
 } else if (isset($_GET['eventosLocal'])) {
     $db = new Database();
     $con = $db->connect();
+    $logado = $_SESSION['logado'];
     $EventosJson = "[";
     $local = $_GET['eventosLocal'];
-    $resultInst = mysqli_query($con, "SELECT evento.*, instituicao.Nome, instituicao.CNPJ FROM `evento` INNER JOIN instituicao ON evento.Instituicao = instituicao.Email WHERE instituicao.Estado = '$local'");
+    $resultInst = mysqli_query($con, "SELECT evento.*, instituicao.Nome, instituicao.CNPJ FROM `evento` INNER JOIN instituicao ON evento.Instituicao = instituicao.Email WHERE instituicao.Estado = '$local' and instituicao.Email <> '$logado'");
     $qtd = mysqli_num_rows($resultInst);
     while ($qtd > 0) {
         $row = mysqli_fetch_array($resultInst);
@@ -80,7 +82,7 @@ if (isset($_GET['animaisLocal'])) {
 }
 
 
-function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade,$rua, $img)
+function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idade,$dono,$nomeDono,$cidade, $img)
 {
     $response['nome'] = $nomeAn;
     $response['imagem'] = $img;
@@ -93,7 +95,6 @@ function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idad
     $response['contato']= $dono;
     $response['dono'] = $nomeDono;
     $response['cidade'] = $cidade;
-    $response['rua'] = $rua;
 
     $json_response = json_encode($response);
     return $json_response;

@@ -41,7 +41,7 @@ if (isset($_POST["nomePessoa"])) {
     header('Location: ../view/page/feed.html');
 }else if(isset($_POST['mensagem'])){
     $bd->inserirMensagem($_SESSION['logado'], $_POST['destinatario'], $_POST['conteudo']);
-}else if(isset($_POST['solicitarConexao'])){
+}else if(isset($_POST['destinatario'])){
     $bd->inserirSolicitacao($_SESSION['logado'], $_POST['destinatario']);
 }
 ?>

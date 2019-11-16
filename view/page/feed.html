@@ -131,6 +131,7 @@
         function mostrarDados(array, categoria) {
             if (array) {
                 let lista = document.querySelector(`#lista${categoria}`);
+                let email;
                 array.forEach(elemento => {
                     let chaves = Object.keys(elemento);
                     let valores = Object.values(elemento);
@@ -146,13 +147,24 @@
                             let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
                             if(chaveFormat == "Imagem")
                                 item.innerHTML =  `<img src="../../repository/uploadedImages/${valores[i]}" />`;
-                            else
+                            else { 
+                                if(chaveFormat == "Contato")
+                                  email = valores[i];
                                 item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                            }
                         }
                         lista.appendChild(item);
                     }
+                    let button = document.createElement("button");
+                    button.setAttribute("onclick", `goToPerfilde('${email}')`);
+                    button.innerHTML = "Acessar Perfil";
+                    lista.appendChild(button);
                 })
             } else erro();
+        }
+
+        function goToPerfilde(email){
+            window.location.href = "perfilDe.html?email=" + email;
         }
 
         function erro(mensagem = "dados") {
