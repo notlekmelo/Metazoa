@@ -79,16 +79,17 @@
                 <h6 class="color-title">Sobre esse usuário:</h6>
                 <ul id="dadosUser" class="list-group"></ul>
                 <br>
-            </div>
-            <form action="../../controller/Register.php" method="POST" autocomplete="off" id="formNew"
-                    style="display:none;">
+                <form action="../../controller/Register.php" method="POST" autocomplete="off" id="formSolicit"
+                    style="display: none;">
                     <div class="row">
-                        <input id="destinatario" class="form-control" type="number" name="destinatario" required readonly>
+                        <input id="destinatario" class="form-control" type="email" name="destinatario" required
+                            readonly>
                     </div>
                     <div class="row">
                         <input class="btn btn-info btn-block" type="submit" value="Enviar solicitação">
                     </div>
                 </form>
+            </div>
         </div>
     </div>
 
@@ -97,6 +98,7 @@
     <script type="text/javascript">
 
         var chaves;
+        var email;
 
         function carregarUsuario() {
             var query = location.search.slice(1);
@@ -108,15 +110,18 @@
                 var valor = chaveValor[1];
                 data[chave] = valor;
             });
-            email = data.email
-            console.log(data);
+            email = data.email;
 
             axios.get(`../../controller/Get.php?perfil_De=${email}`)
                 .then(response => {
-                    axios.get(`../../controller/Authenticate.php?permissao=${email}`).then(resposta=>{
-                        if(resposta.data.confirmacao == 1)
+                    axios.get(`../../controller/Authenticate.php?permissao=${email}`).then(resposta => {
+                        let resp = resposta.data.confirmacao;
+                        if (resp == 1)
                             mostrarDados(response.data)
-                        else mostrarSolicitacao(email);
+                        else if (resp == 0)
+                            alert("Aguarde o usuário aceitar sua solicitação");
+                        else mostrarSolicitacao(response.data)
+                        mostrarDadosBasicos(response.data)
                     })
 
                 })
@@ -144,9 +149,33 @@
                 alert("Erro ao carregar usuário.")
         }
 
-        function mostrarSolicitacao(email){
-            
-        } 
+        function mostrarSolicitacao(usuario) {
+
+
+            let form = document.querySelector('#formSolicit');
+            form.removeAttribute('style');
+            document.getElementById('destinatario').value = email;
+        }
+
+        function mostrarDadosBasicos(usuario){
+            if (usuario.nome) {
+                let lista = document.querySelector("#dadosUser");
+
+                chaves = Object.keys(usuario);
+                let valores = Object.values(usuario);
+
+                for (let i = 0; i < chaves.length; i++) {
+                    if (chaves[i] == 'nome' || chaves[i] == 'cidade' || chaves[i] == 'estado') {
+                        let item = document.createElement("li");
+                        item.className = "list-group-item";
+                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                        lista.appendChild(item);
+                    }
+                }
+            } else
+                alert("Erro ao carregar usuário.")
+        }
     </script>
 </body>
 

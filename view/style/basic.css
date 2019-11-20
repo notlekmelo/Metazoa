@@ -19,6 +19,7 @@ html {
 
 .list-group-item {
   font-size: 15px;
+  display: flex;
 }
 
 b {
@@ -30,4 +31,10 @@ b {
   margin-right: 0;
   margin-left: 0;
   margin-bottom: 1%;
+}
+
+.list-group-item img {
+  width: 200px;
+  margin: 0 auto;
+  border-radius: 8%;
 }

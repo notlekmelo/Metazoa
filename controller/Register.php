@@ -31,7 +31,7 @@ if (isset($_POST["nomePessoa"])) {
     $animal = new Animal($_POST['nomeAnimal'],$_SESSION['logado'],$_POST['sexo'],$_POST['especAnimal'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
     $bd->inserirAnimal($animal,$novo_nome);
     header('Location: ../view/page/perfil.html');
-     }
+    }
 }else if(isset($_POST['EspecieInteresse'])){
     $animal = new Animal('',$_SESSION['logado'],$_POST['sexo'],$_POST['EspecieInteresse'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
     $bd->inserirInteresse($animal);
@@ -43,5 +43,6 @@ if (isset($_POST["nomePessoa"])) {
     $bd->inserirMensagem($_SESSION['logado'], $_POST['destinatario'], $_POST['conteudo']);
 }else if(isset($_POST['destinatario'])){
     $bd->inserirSolicitacao($_SESSION['logado'], $_POST['destinatario']);
+    header('Location: ../view/page/perfilDe.html');
 }
 ?>

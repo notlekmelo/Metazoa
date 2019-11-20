@@ -91,7 +91,7 @@
         function carregarFeed() {
 
             let tipo = sessionStorage.getItem("tipo");
-            if(tipo == "instituicao")
+            if (tipo == "instituicao")
                 document.getElementById("eventPage").removeAttribute("style");
             let email = sessionStorage.getItem("email");
 
@@ -136,26 +136,29 @@
                     let chaves = Object.keys(elemento);
                     let valores = Object.values(elemento);
                     for (let i = 0; i < chaves.length; i++) {
-                        let item = document.createElement("li");
-                        item.className = "list-group-item";
-                        if (i == 0) {
-                            item.classList.add("text-center");
-                            item.setAttribute("style", "color: black");
-                            item.innerHTML = `<b>${valores[i]}</b>`;
-                        }
-                        else {
-                            let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                            if(chaveFormat == "Imagem")
-                                item.innerHTML =  `<img src="../../repository/uploadedImages/${valores[i]}" />`;
-                            else { 
-                                if(chaveFormat == "Contato")
-                                  email = valores[i];
-                                item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                        if (chaves[i] != 'contato') {
+                            let item = document.createElement("li");
+                            item.className = "list-group-item";
+                            if (i == 0) {
+                                item.classList.add("justify-content-center");
+                                item.setAttribute("style", "color: black");
+                                item.innerHTML = `<b>${valores[i]}</b>`;
                             }
-                        }
-                        lista.appendChild(item);
+                            else {
+                                let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                                if (chaveFormat == "Imagem") {
+                                    if (valores[i] != '')
+                                        item.innerHTML = `<img src="../../repository/uploadedImages/${valores[i]}" />`;
+                                } else {
+                                    item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                                    lista.appendChild(item);
+                                }
+                            }
+                        } else
+                            email = valores[i];
                     }
                     let button = document.createElement("button");
+                    button.className = 'btn btn-info';
                     button.setAttribute("onclick", `goToPerfilde('${email}')`);
                     button.innerHTML = "Acessar Perfil";
                     lista.appendChild(button);
@@ -163,7 +166,7 @@
             } else erro();
         }
 
-        function goToPerfilde(email){
+        function goToPerfilde(email) {
             window.location.href = "perfilDe.html?email=" + email;
         }
 

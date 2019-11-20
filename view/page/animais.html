@@ -195,18 +195,21 @@
                     let item = document.createElement("li");
                     item.className = "list-group-item";
                     if (i == 0) {
-                        item.classList.add("text-center");
+                        item.classList.add("justify-content-center");
                         item.setAttribute("style", "color: black");
                         item.innerHTML = `<b>${valores[i]}</b>`;
                     }
                     else {
                         let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                        if(chaveFormat == "Imagem")
-                            item.innerHTML =  `<img src="../../repository/uploadedImages/${valores[i]}" />`;
-                        else
+                        if (chaveFormat == "Imagem") {
+                            if (valores[i] != '')
+                                item.innerHTML = `<img src="../../repository/uploadedImages/${valores[i]}" />`;
+                        } else {
                             item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                            lista.appendChild(item);
+                        }
                     }
-                    lista.appendChild(item);
+
 
                 }
 
