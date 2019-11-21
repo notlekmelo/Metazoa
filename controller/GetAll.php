@@ -52,7 +52,29 @@ if (isset($_GET['animaisLocal'])) {
     mysqli_close($con);
     $AnimaisJson = $AnimaisJson . "]";
     echo $AnimaisJson;
-} else if (isset($_GET['eventosLocal'])) {
+} else if (isset($_GET['solicitacaoPessoal'])) {
+    $db = new Database();
+    $con = $db->connect();
+    $logado = $_SESSION['logado'];
+    $SolicitacaoJson = "[";
+    $local = $_GET['animaisLocal'];
+    $result = mysqli_query($con, "SELECT idInteressado, Nome, Cidade, Estado FROM `solicitacao` INNER JOIN `pessoa` ON solicitacao.IdReceptor = pessoa.Email WHERE idReceptor='$logado'");
+    $numResults = mysqli_num_rows($result);
+    while ($numResults > 0) {
+        $row = mysqli_fetch_array($result);
+        $solicitante = $row['idInteressado'];
+        $nome = $row['Nome'];
+        $cidade = $row['Cidade'];
+        $estado = $row['Estado'];
+        if($numResults - 1 > 0)
+            $SolicitacaoJson = $SolicitacaoJson . responseSolicitacao($solicitante,$nome,$cidade,$estado) . ",";
+        else $SolicitacaoJson = $SolicitacaoJson . responseSolicitacao($solicitante,$nome,$cidade,$estado);
+        $numResults = $numResults - 1;
+    }
+    mysqli_close($con);
+    $SolicitacaoJson = $SolicitacaoJson . "]";
+    echo $SolicitacaoJson;
+}else if (isset($_GET['eventosLocal'])) {
     $db = new Database();
     $con = $db->connect();
     $logado = $_SESSION['logado'];
@@ -94,6 +116,16 @@ function responseAnimais($nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo,$idad
     $response['idade'] = $idade;
     $response['contato']= $dono;
     $response['dono'] = $nomeDono;
+    $response['cidade'] = $cidade;
+
+    $json_response = json_encode($response);
+    return $json_response;
+}
+
+function responseSolicitacao($solicitante,$nome,$cidade,$estado){
+    $response['nome'] = $nome;
+    $response['solicitante'] = $solicitante;
+    $response['estado'] = $estado;
     $response['cidade'] = $cidade;
 
     $json_response = json_encode($response);

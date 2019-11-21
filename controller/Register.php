@@ -39,8 +39,9 @@ if (isset($_POST["nomePessoa"])) {
     $evento = new Evento($_POST['nomeEvento'],$_POST['descEvento'],$_POST['dataEvento'],$_POST['horaEvento'],$_SESSION['logado'],$_POST['localEvento']);
     $bd->inserirEvento($evento);
     header('Location: ../view/page/feed.html');
-}else if(isset($_POST['mensagem'])){
-    $bd->inserirMensagem($_SESSION['logado'], $_POST['destinatario'], $_POST['conteudo']);
+}else if(isset($_POST['TxtMsg'])){
+    $bd->inserirMensagem($_SESSION['logado'], $_POST['MsgPara'], $_POST['TxtMsg']);
+    header('Location: ../view/page/feed.html');
 }else if(isset($_POST['destinatario'])){
     $bd->inserirSolicitacao($_SESSION['logado'], $_POST['destinatario']);
     header('Location: ../view/page/perfilDe.html');

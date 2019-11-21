@@ -39,6 +39,25 @@ if (isset($_GET['pessoa_id'])) {
     } else {
         responseErro("Nenhum registro encontrado.");
     }
+}else if (isset($_GET['mensagem'])) {
+    $db = new Database();
+    $con = $db->connect();
+    $instituicao_id = $_SESSION['logado'];
+    $MensagensJson = "[";
+    $result = mysqli_query($con, "SELECT * FROM `mensagem` WHERE idInstituicao='$instituicao_id'");
+    $qtd = mysqli_num_rows($result);
+    while ($qtd > 0) {
+        $row = mysqli_fetch_array($result);
+        $remetente = $row['idPessoa'];
+        $conteudo = $row['conteudo'];
+        if ($qtd - 1 > 0)
+            $MensagensJson = $MensagensJson . responseMensagem($remetente, $conteudo) . ",";
+        else $MensagensJson = $MensagensJson . responseMensagem($remetente, $conteudo);
+        $qtd = $qtd - 1;
+        mysqli_close($con);
+        $MensagensJson = $MensagensJson . "]";
+        echo $MensagensJson;
+    } 
 }else if(isset($_GET['perfil_De'])){
     $db = new Database();
     $con = $db->connect();
@@ -176,6 +195,14 @@ function responseEventos($nomeEv,$desc,$cod, $data, $hora, $local)
     $response['data'] = $data;
     $response['horario'] = $hora;
     $response['local'] = $local;
+
+    $json_response = json_encode($response);
+    return $json_response;
+}
+
+function responseMensagem($remetente, $conteudo){
+    $response['remetente'] = $remetente;
+    $response['conteudo'] = $conteudo;
 
     $json_response = json_encode($response);
     return $json_response;

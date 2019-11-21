@@ -91,7 +91,7 @@ class Database
 
     function inserirMensagem($from, $for, $conteudo){
         $this->connect();
-        $this->query = "insert into mensagem (idPessoa, idInstituicao, conteudo) values ( $from, $for, $conteudo) ";
+        $this->query = "insert into mensagem (idPessoa, idInstituicao, conteudo) values ( '$from', '$for', '$conteudo') ";
         if ($this->result = mysqli_query($this->link, $this->query)) {
             $this->disconnect();
             return $this->result;

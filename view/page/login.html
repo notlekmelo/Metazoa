@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../style/form.css">
 </head>
 
-<body>
+<body onload="verificaFalha()">
     <script type="text/javascript">
         function salvarStorage() {
             sessionStorage.setItem("email", document.getElementById("emailInput").value);
@@ -29,6 +29,11 @@
             } else {
                 sessionStorage.setItem("tipo", "instituicao");
             }
+        }
+
+        function verificaFalha(){
+            if(sessionStorage.getItem("email"))
+                alert("Falha ao realizar login, por favor tente novamente");
         }
     </script>
 

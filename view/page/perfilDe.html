@@ -90,6 +90,21 @@
                     </div>
                 </form>
             </div>
+            <form action="../../controller/Register.php" method="POST" autocomplete="off" id="formMsg"
+                style="display: none;">
+                <div class="row">
+                    <label for="form">
+                        Deixe uma mensagem para esta instituição
+                    </label>
+                </div>
+                <div class="row">
+                    <input id="MsgPara" class="form-control" type="email" name="MsgPara" required readonly>
+                </div>
+                <div class="row">
+                    <textarea name="TxtMsg" id="TxtMsg" cols="70" rows="4"></textarea>
+                </div>
+                <input type="submit" value="Enviar Mensagem">
+            </form>
         </div>
     </div>
 
@@ -114,16 +129,21 @@
 
             axios.get(`../../controller/Get.php?perfil_De=${email}`)
                 .then(response => {
-                    axios.get(`../../controller/Authenticate.php?permissao=${email}`).then(resposta => {
-                        let resp = resposta.data.confirmacao;
-                        if (resp == 1)
-                            mostrarDados(response.data)
-                        else if (resp == 0)
-                            alert("Aguarde o usuário aceitar sua solicitação");
-                        else mostrarSolicitacao(response.data)
-                        mostrarDadosBasicos(response.data)
-                    })
-
+                    if (!response.data.cnpj) {
+                        axios.get(`../../controller/Authenticate.php?permissao=${email}`).then(resposta => {
+                            let resp = resposta.data.confirmacao;
+                            if (resp == 1)
+                                mostrarDados(response.data)
+                            else if (resp == 0)
+                                alert("Aguarde o usuário aceitar sua solicitação");
+                            else mostrarSolicitacao(response.data)
+                            mostrarDadosBasicos(response.data)
+                        })
+                    }
+                    else {
+                        mostrarDados(response.data);
+                        mostrarMensagem(response.data)
+                    }
                 })
                 .catch(error => {
                     alert("Erro na requisição.");
@@ -157,7 +177,7 @@
             document.getElementById('destinatario').value = email;
         }
 
-        function mostrarDadosBasicos(usuario){
+        function mostrarDadosBasicos(usuario) {
             if (usuario.nome) {
                 let lista = document.querySelector("#dadosUser");
 
@@ -175,6 +195,12 @@
                 }
             } else
                 alert("Erro ao carregar usuário.")
+        }
+
+        function mostrarMensagem(usuario) {
+            let form = document.querySelector('#formMsg');
+            form.removeAttribute('style');
+            document.getElementById('MsgPara').value = email;
         }
     </script>
 </body>
