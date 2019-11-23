@@ -1,6 +1,8 @@
 <?php
 require_once "../repository/Database.php";
 header("Content-Type:application/json");
+session_start();
+
 if (isset($_GET['pessoa_id'])) {
     $db = new Database();
     $con = $db->connect();
@@ -36,6 +38,19 @@ if (isset($_GET['pessoa_id'])) {
         $conta = $row['Conta'];
         mysqli_close($con);
         responseInstituicao($instituicao_id, $nome, $CNPJ, $Telefone, $estado, $cidade, $rua, $bairro, $conta);
+    } else {
+        responseErro("Nenhum registro encontrado.");
+    }
+}else if (isset($_GET['solicitacao'])) {
+    $db = new Database();
+    $con = $db->connect();
+    $pessoa = $_SESSION['logado'];
+    $result = mysqli_query($con, "SELECT * FROM `solicitacao` WHERE idReceptor='$pessoa' and confirmacao= 0 ");
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_array($result);
+        $nome = $row['idInteressado'];
+        mysqli_close($con);
+        responseSolicitacao($nome);
     } else {
         responseErro("Nenhum registro encontrado.");
     }
@@ -200,9 +215,16 @@ function responseEventos($nomeEv,$desc,$cod, $data, $hora, $local)
     return $json_response;
 }
 
+function responseSolicitacao($nome){
+    $response['solicitacao de'] = $nome;
+
+    $json_response = json_encode($response);
+    return $json_response;
+}
+
 function responseMensagem($remetente, $conteudo){
-    $response['remetente'] = $remetente;
     $response['conteudo'] = $conteudo;
+    $response['remetente'] = $remetente;
 
     $json_response = json_encode($response);
     return $json_response;

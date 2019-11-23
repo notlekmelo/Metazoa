@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../style/basic.css">
 </head>
 
-<body onload="carregarAnimais()">
+<body onload="carregarDados()">
     <nav class="navbar navbar-expand-lg navbar-dark bg-color shadow-sm">
         <a class="navbar-brand" href="../../index.html">
             <img width="100" class="d-inline-block align-top" src="../image/logo1.png">
@@ -68,9 +68,7 @@
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
-                <!-- Inserir conteúdo da página aqui -->
-                <a href="../../controller/GetImg.php?codAnimal=10">Desisto</a>
-                <img src="../../controller/GetImg.php?codAnimal=10" />
+
             </div>
         </div>
     </div>
@@ -79,24 +77,60 @@
     <script type="text/javascript">
 
         var chaves;
-        function carregarAnimais() {
-            if(tipo == "instituicao")
+        function carregarDados() {
+            let tipo = sessionStorage.getItem('tipo')
+            if (tipo == "instituicao") {
                 document.getElementById("eventPage").removeAttribute("style");
-            axios.get(`../../controller/GetImg.php?codAnimal=10`)
-                .then(response => {
-                    mostrarDados(response.data)
+                axios.get(`../../controller/Get.php?mensagem=""`)
+                    .then(response => {
+                        mostrarMensagens(response.data)
 
-                })
-                .catch(error => {
-                    alert("Erro na requisição.");
-                    console.log(error);
-                });
+                    })
+                    .catch(error => {
+                        alert("Erro na requisição.");
+                        console.log(error);
+                    });
+            }
+            else {
+                axios.get(`../../controller/Get.php?solicitacao=""`)
+                    .then(response => {
+                        mostrarSolicitacao(response.data)
+
+                    })
+                    .catch(error => {
+                        alert("Erro na requisição.");
+                        console.log(error);
+                    });
+            }
         }
-        function mostrarDados(animais) {
+
+        function mostrarMensagens(mensagens) {
             let lista = document.querySelector(".card-body");
-            animais.forEach(animal => {
-                let chaves = Object.keys(animal);
-                let valores = Object.values(animal);
+            mensagens.forEach(mensagens => {
+                let chaves = Object.keys(mensagens);
+                let valores = Object.values(mensagens);
+                for (let i = 0; i < chaves.length; i++) {
+                    let item = document.createElement("li");
+                    item.className = "list-group-item";
+                    if (i == 0) {
+                        item.classList.add("text-center");
+                        item.setAttribute("style", "color: black");
+                        item.innerHTML = `<b>${valores[i]}</b>`;
+                    }
+                    else {
+                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                    }
+                    lista.appendChild(item);
+                }
+            })
+        }
+
+        function mostrarSolicitacao(solic) {
+            let lista = document.querySelector(".card-body");
+            solic.forEach(solic => {
+                let chaves = Object.keys(solic);
+                let valores = Object.values(solic);
                 for (let i = 0; i < chaves.length; i++) {
                     let item = document.createElement("li");
                     item.className = "list-group-item";

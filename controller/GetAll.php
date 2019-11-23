@@ -80,20 +80,21 @@ if (isset($_GET['animaisLocal'])) {
     $logado = $_SESSION['logado'];
     $EventosJson = "[";
     $local = $_GET['eventosLocal'];
-    $resultInst = mysqli_query($con, "SELECT evento.*, instituicao.Nome, instituicao.CNPJ FROM `evento` INNER JOIN instituicao ON evento.Instituicao = instituicao.Email WHERE instituicao.Estado = '$local' and instituicao.Email <> '$logado'");
+    $resultInst = mysqli_query($con, "SELECT evento.*, instituicao.Nome, instituicao.Email ,instituicao.CNPJ FROM `evento` INNER JOIN instituicao ON evento.Instituicao = instituicao.Email WHERE instituicao.Estado = '$local' and instituicao.Email <> '$logado'");
     $qtd = mysqli_num_rows($resultInst);
     while ($qtd > 0) {
         $row = mysqli_fetch_array($resultInst);
         $nomeEv = $row['NomeEvento'];
         $dono = $row['Nome'];
         $cnpj = $row['CNPJ'];
+        $email = $row['Email'];
         $Desc = $row['Descricao'];
         $data = $row['Data'];
         $hora = $row['Horario'];
         $local = $row['Local'];
         if($qtd - 1 > 0)
-            $EventosJson = $EventosJson . responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora) . ",";
-        else $EventosJson = $EventosJson . responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora);
+            $EventosJson = $EventosJson . responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora, $email) . ",";
+        else $EventosJson = $EventosJson . responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora, $email);
         $qtd = $qtd - 1;
     }
     mysqli_close($con);
@@ -132,12 +133,13 @@ function responseSolicitacao($solicitante,$nome,$cidade,$estado){
     return $json_response;
 }
 
-function responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora)
+function responseEventos($nomeEv,$dono,$cnpj,$Desc,$data, $local, $hora, $email)
 {
     
     $response['nome do Evento'] = $nomeEv;
     $response['responsável'] = $dono;
     $response['cNPJ'] = $cnpj;
+    $response['contato'] = $email;
     $response['descricao'] = $Desc;
     $response['data'] = $data;
     $response['horario'] = $hora;
