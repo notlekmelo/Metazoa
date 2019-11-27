@@ -45,15 +45,21 @@ if (isset($_GET['pessoa_id'])) {
     $db = new Database();
     $con = $db->connect();
     $pessoa = $_SESSION['logado'];
-    $result = mysqli_query($con, "SELECT * FROM `solicitacao` WHERE idReceptor='$pessoa' and confirmacao= 0 ");
-    if (mysqli_num_rows($result) > 0) {
+    $solicitacaoJson = "[";
+    $result = mysqli_query($con, "SELECT * FROM `solicitacao` WHERE idReceptor='$pessoa' and confirmacao = 0 ");
+    $qtd = mysqli_num_rows($result);
+    while ($qtd > 0) {
         $row = mysqli_fetch_array($result);
         $nome = $row['idInteressado'];
         mysqli_close($con);
-        responseSolicitacao($nome);
-    } else {
-        responseErro("Nenhum registro encontrado.");
+        if ($qtd - 1 > 0)
+        $solicitacaoJson = $solicitacaoJson . responseSolicitacao($nome) . ",";
+    else $solicitacaoJson = $solicitacaoJson . responseSolicitacao($nome);
+    
+    $qtd = $qtd - 1; 
     }
+        $solicitacaoJson = $solicitacaoJson . "]";
+        echo $solicitacaoJson;
 }else if (isset($_GET['mensagem'])) {
     $db = new Database();
     $con = $db->connect();
@@ -69,10 +75,10 @@ if (isset($_GET['pessoa_id'])) {
             $MensagensJson = $MensagensJson . responseMensagem($remetente, $conteudo) . ",";
         else $MensagensJson = $MensagensJson . responseMensagem($remetente, $conteudo);
         $qtd = $qtd - 1;
+    } 
         mysqli_close($con);
         $MensagensJson = $MensagensJson . "]";
         echo $MensagensJson;
-    } 
 }else if(isset($_GET['perfil_De'])){
     $db = new Database();
     $con = $db->connect();
@@ -102,6 +108,30 @@ if (isset($_GET['pessoa_id'])) {
         mysqli_close($con);
         responsePessoa($email, $nome, $Telefone, $estado, $cidade, $rua, $bairro);
 }
+}else if (isset($_GET['interesses'])) {
+    $db = new Database();
+    $con = $db->connect();
+    $interessado = $_GET['interesses'];
+    $interesseJson = "[";
+    $result = mysqli_query($con, "SELECT * FROM `interesse` WHERE Interessado='$interessado'");
+    $qtd = mysqli_num_rows($result);
+    while ($qtd > 0) {
+        $row = mysqli_fetch_array($result);
+        $cod = $row['CodInteresse'];
+        $Especie = $row['Especie'];
+        $Raca = $row['Raca'];
+        $Desc = $row['Descricao'];
+        $Sexo = $row['Sexo'];
+        $objetivo = $row['Objetivo'];
+        $idade = $row['Idade'];
+        if ($qtd - 1 > 0)
+            $interesseJson = $interesseJson . responseInteresse($cod, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade) . ",";
+        else $interesseJson = $interesseJson . responseInteresse($cod, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade);
+        $qtd = $qtd - 1;
+    } 
+        mysqli_close($con);
+        $interesseJson = $interesseJson . "]";
+        echo $interesseJson;
 }else if (isset($_GET['animais_de'])) {
     $db = new Database();
     $con = $db->connect();
@@ -183,6 +213,20 @@ function responseInstituicao($instituicao_id, $Nome, $CNPJ, $Telefone, $estado, 
 
     $json_response = json_encode($response);
     echo $json_response;
+}
+
+function responseInteresse($cod, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade){
+    $response['codigo'] = $cod;
+    $response['especie'] = $Especie;
+    $response['raca'] = $Raca;
+    $response['descricao'] = $Desc;
+    $response['objetivo'] = $objetivo;
+    $response['sexo'] = $Sexo;
+    $response['idade'] = $idade;
+
+
+    $json_response = json_encode($response);
+    return $json_response;
 }
 
 function responseAnimais($cod, $nomeAn, $Especie, $Raca, $Desc, $Sexo, $objetivo, $idade,$img)

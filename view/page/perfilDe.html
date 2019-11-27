@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" selected href="#">
+                    <a class="nav-link" href="perfil.html">
                         <img src="../image/face.png">
                         <span>Perfil</span>
                     </a>
@@ -61,12 +61,6 @@
                     <a class="nav-link" href="eventos.html">
                         <img src="../image/calendar.png">
                         <span>Eventos</span>
-                    </a>
-                </li>
-                <li class="nav-item px-3" onclick="fazerLogout()">
-                    <a class="nav-link" href="../../index.html">
-                        <img src="../image/power.png">
-                        <span>Sair</span>
                     </a>
                 </li>
             </ul>
@@ -126,18 +120,30 @@
                 data[chave] = valor;
             });
             email = data.email;
+            if (sessionStorage.getItem('tipo') == 'instituicao')
+                document.getElementById("eventPage").removeAttribute("style");
 
             axios.get(`../../controller/Get.php?perfil_De=${email}`)
                 .then(response => {
                     if (!response.data.cnpj) {
                         axios.get(`../../controller/Authenticate.php?permissao=${email}`).then(resposta => {
                             let resp = resposta.data.confirmacao;
-                            if (resp == 1)
+                            if (resp == 1 || sessionStorage.getItem('tipo') == 'instituicao') {
                                 mostrarDados(response.data)
+                                axios.get(`../../controller/Get.php?interesses=${email}`)
+                                    .then(resolva => {
+                                        mostrarInteresse(resolva.data)
+                                    })
+                                    .catch(error => {
+                                        alert("Erro ao carregar usuário.");
+                                        console.log(error);
+                                    });
+                            }
                             else if (resp == 0)
                                 alert("Aguarde o usuário aceitar sua solicitação");
-                            else mostrarSolicitacao(response.data)
+                            else {mostrarSolicitacao(response.data)
                             mostrarDadosBasicos(response.data)
+                            }
                         })
                     }
                     else {
@@ -152,8 +158,8 @@
         }
 
         function mostrarDados(usuario) {
+            let lista = document.querySelector("#dadosUser");
             if (usuario.nome) {
-                let lista = document.querySelector("#dadosUser");
 
                 chaves = Object.keys(usuario);
                 let valores = Object.values(usuario);
@@ -167,6 +173,36 @@
                 }
             } else
                 alert("Erro ao carregar usuário.")
+            let title = document.createElement("h6");
+            title.className = "color-title";
+            title.innerHTML = "Os interesses dele";
+            lista.appendChild(document.createElement("br"))
+            lista.appendChild(title);
+        }
+
+        function mostrarInteresse(animais) {
+            let lista = document.querySelector(".card-body");
+            animais.forEach(animal => {
+                chaves = Object.keys(animal);
+                let valores = Object.values(animal);
+                for (let i = 0; i < chaves.length; i++) {
+                    let item = document.createElement("li");
+                    item.className = "list-group-item";
+                    if (i == 0) {
+                        item.classList.add("justify-content-center");
+                        item.setAttribute("style", "color: black");
+                        item.innerHTML = `<b>${valores[i]}</b>`;
+                    }
+                    else {
+                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                        lista.appendChild(item);
+
+                    }
+
+
+                }
+            });
         }
 
         function mostrarSolicitacao(usuario) {

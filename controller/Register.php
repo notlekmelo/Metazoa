@@ -35,6 +35,7 @@ if (isset($_POST["nomePessoa"])) {
 }else if(isset($_POST['EspecieInteresse'])){
     $animal = new Animal('',$_SESSION['logado'],$_POST['sexo'],$_POST['EspecieInteresse'],$_POST['descAnimal'],$_POST['objetivoAnimal'],$_POST['idadeAnimal'],$_POST['racaAnimal']);
     $bd->inserirInteresse($animal);
+    header('Location: ../view/page/perfil.html');
 }else if(isset($_POST['nomeEvento'])){
     $evento = new Evento($_POST['nomeEvento'],$_POST['descEvento'],$_POST['dataEvento'],$_POST['horaEvento'],$_SESSION['logado'],$_POST['localEvento']);
     $bd->inserirEvento($evento);
@@ -44,6 +45,6 @@ if (isset($_POST["nomePessoa"])) {
     header('Location: ../view/page/feed.html');
 }else if(isset($_POST['destinatario'])){
     $bd->inserirSolicitacao($_SESSION['logado'], $_POST['destinatario']);
-    header('Location: ../view/page/perfilDe.html');
+    header('Location: ../view/page/perfilDe.html?email=' . $_POST['destinatario']);
 }
 ?>

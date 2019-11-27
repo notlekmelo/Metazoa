@@ -119,6 +119,77 @@
                         Cancelar
                     </button>
                 </div>
+                <button class="btn btn-success col-6" onclick=mostrarForm() id='buttonNovo' style="display:none">Novo interesse</button>
+
+                <form id="formNew" action="../../controller/Register.php" style="display:none" autocomplete="off"
+                    method="POST">
+                    <br />
+                    <input class="form-control" type="text" placeholder="Digite a espécie do animal" name="EspecieInteresse"
+                        required>
+                    <br />
+                    <input class="form-control" type="text" placeholder="Digite a raça do animal" name="racaAnimal">
+                    <br />
+                    <select class="form-control" name="sexo" id="sexoAnimal" required>
+                        <option value="" disabled selected hidden>Selecione o sexo do animal</option>
+                        <option value="M">Macho</option>
+                        <option value="F">Fêmea</option>
+                        <option value="NS">Não identificado</option>
+                    </select>
+                    <br />
+                    <input class="form-control" type="text" placeholder="Digite a descrição do animal"
+                        name="descAnimal">
+                    <br />
+                    <input class="form-control" type="text" placeholder="Digite a idade do animal" name="idadeAnimal">
+                    <br />
+                    <label class="w-100 text-center" for="obj" style="display:none" id="obj">Este animal é para adoção
+                        ou reprodução?</label>
+                    <br />
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <input type="radio" id="objAdoc" value="adoção" name="objetivoAnimal"
+                                class="objetivoAnimal">
+                            <label for="Adoção"><b>Adoção</b></label>
+                        </div>
+                        <div class="ml-5">
+                            <input type="radio" value="reprodução" id="objReprod" name="objetivoAnimal"
+                                class="objetivoAnimal">
+                            <label for="reproducao"><b>Reprodução</b></label>
+                        </div>
+                    </div>
+
+                    <br>
+                    <input class="btn btn-info btn-block" type="submit" value="Cadastrar">
+                    <br>
+                </form>
+                <form action="../../controller/Update.php" method="POST" autocomplete="off" id="formEdit"
+                    style="display:none;">
+                    <div class="row">
+                        <input id="codAnimal" class="form-control" type="number" name="codigoInteresse" required readonly>
+                    </div>
+                    <div class="row">
+                        <select id="listaCampos" class="form-control" type="text" name="alteracaoInteresse" required>
+                            <option value="" disabled hidden selected>Campo a ser alterado</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <input class="form-control" type="text" placeholder="Novo valor" name="novoValor" required>
+                    </div>
+                    <div class="row">
+                        <input class="btn btn-info btn-block" type="submit" value="Confirmar edição">
+                    </div>
+                </form>
+
+                <form id="formExc" action="../../controller/Delete.php" method="POST" style="display:none"
+                    autocomplete="off">
+                    <div class="row">
+                        <input class="form-control" type="number" readonly required name="codIntExc" id="codAnimExc">
+                    </div>
+                    <div class="row">
+                        <input class="btn btn-info btn-block" type="submit" value="Confirmar exclusão">
+                    </div>
+                </form>
+                <br>
+                <h6 class="color-title">Interesses:</h6>
             </div>
         </div>
     </div>
@@ -134,6 +205,8 @@
             let tipo = sessionStorage.getItem("tipo");
             if (tipo == "instituicao")
                 document.getElementById("eventPage").removeAttribute("style");
+            else document.getElementById("buttonNovo").removeAttribute("style");
+
             let email = sessionStorage.getItem("email");
 
             axios.get(`../../controller/Get.php?${tipo}_id=${email}`)
@@ -143,6 +216,14 @@
                 })
                 .catch(error => {
                     alert("Erro na requisição.");
+                    console.log(error);
+                });
+                axios.get(`../../controller/Get.php?interesses=${email}`)
+                .then(response => {
+                    mostrarInteresse(response.data)
+                })
+                .catch(error => {
+                    alert("Erro ao carregar usuário.");
                     console.log(error);
                 });
         }
@@ -165,6 +246,49 @@
                 alert("Erro ao carregar usuário.")
         }
 
+        function mostrarInteresse(animais) {
+            let lista = document.querySelector(".card-body");
+            animais.forEach(animal => {
+                var { codigo } = animal;
+                chaves = Object.keys(animal);
+                let valores = Object.values(animal);
+                for (let i = 0; i < chaves.length; i++) {
+                    let item = document.createElement("li");
+                    item.className = "list-group-item";
+                    if (i == 0) {
+                        item.classList.add("justify-content-center");
+                        item.setAttribute("style", "color: black");
+                        item.innerHTML = `<b>${valores[i]}</b>`;
+                    }
+                    else {
+                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                            item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                            lista.appendChild(item);
+                        
+                    }
+
+
+                }
+
+                let div = document.createElement('li');
+                div.classList.add('btn-group', 'btn-block', 'list-group-item');
+                let btnExc = document.createElement('button');
+                btnExc.classList.add('btn', 'btn-danger', 'col-6');
+                btnExc.setAttribute('onClick', `formRemover(${codigo})`);
+                btnExc.innerHTML = 'Excluir';
+                let btnAlt = document.createElement('button');
+                btnAlt.classList.add('btn', 'btn-secondary', 'col-6');
+                btnAlt.setAttribute('onClick', `formEdit(${codigo})`);
+                btnAlt.innerHTML = 'Editar';
+
+                div.appendChild(btnAlt);
+                div.appendChild(btnExc);
+
+                lista.appendChild(div);
+            });
+            listarCamposInt();
+        }
+
         function listarCampos() {
             let select = document.querySelector('#campoInput');
             chaves.forEach(campo => {
@@ -176,6 +300,24 @@
                     select.appendChild(option);
                 }
             });
+        }
+
+        function listarCamposInt() {
+            let select = document.querySelector('#listaCampos');
+            chaves.forEach(campo => {
+                if (campo) {
+                    let option = document.createElement('option');
+                    let campoFormat = campo[0].toUpperCase() + campo.slice(1);
+                    option.setAttribute('value', campoFormat);
+                    option.innerHTML = campo;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        function mostrarForm() {
+            fecharForms();
+            document.getElementById('formNew').removeAttribute('style');
         }
 
         function MostraCampo() {
@@ -216,6 +358,24 @@
         function fazerLogout() {
             sessionStorage.removeItem('email');
             sessionStorage.removeItem('tipo');
+        }
+
+        function formRemover(codigo) {
+            fecharForms();
+            document.getElementById('formExc').removeAttribute('style');
+            document.getElementById('codAnimExc').value = codigo;
+        }
+
+        function formEdit(codigo) {
+            fecharForms();
+            document.getElementById("formEdit").removeAttribute("style");
+            document.getElementById("codAnimal").value = codigo;
+        }
+
+        function fecharForms() {
+            document.getElementById('formExc').setAttribute('style', 'display: none');
+            document.getElementById('formNew').setAttribute('style', 'display: none');
+            document.getElementById("formEdit").setAttribute('style', 'display: none');
         }
 
     </script>

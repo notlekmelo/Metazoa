@@ -68,7 +68,18 @@
     <div class="container">
         <div class="card shadow">
             <div class="card-body">
-
+                <ul id="dadosUser" class="list-group"></ul>
+                <br>
+                <form action="../../controller/Update.php" method="POST" autocomplete="off" id="formSolicit"
+                    style="display: none;">
+                    <div class="row">
+                        <input id="destinatario" class="form-control" type="email" name="destinatario" required
+                            readonly>
+                    </div>
+                    <div class="row">
+                        <input class="btn btn-info btn-block" type="submit" value="Confirmar">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -123,29 +134,39 @@
                     }
                     lista.appendChild(item);
                 }
+                lista.appendChild(document.createElement("br"));
             })
         }
 
         function mostrarSolicitacao(solic) {
-            let lista = document.querySelector(".card-body");
+            let email;
+            let lista = document.querySelector("#dadosUser");
             solic.forEach(solic => {
                 let chaves = Object.keys(solic);
                 let valores = Object.values(solic);
                 for (let i = 0; i < chaves.length; i++) {
                     let item = document.createElement("li");
                     item.className = "list-group-item";
-                    if (i == 0) {
-                        item.classList.add("text-center");
-                        item.setAttribute("style", "color: black");
-                        item.innerHTML = `<b>${valores[i]}</b>`;
-                    }
-                    else {
-                        let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
-                        item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
-                    }
+
+                    let chaveFormat = chaves[i][0].toUpperCase() + chaves[i].slice(1);
+                    item.innerHTML = `<b>${chaveFormat}</b>: ${valores[i]}`;
+                   email = valores[i];
+
                     lista.appendChild(item);
+
                 }
-            })
+                let btnAlt = document.createElement('button');
+                btnAlt.classList.add('btn', 'btn-secondary', 'col-6');
+                btnAlt.setAttribute('onClick', `formAccept('${email}')`);
+                btnAlt.innerHTML = 'Aceitar Solicitação';
+                lista.appendChild(btnAlt);
+            });
+        }
+
+        function formAccept(email) {
+            let form = document.querySelector('#formSolicit');
+            form.removeAttribute('style');
+            document.getElementById('destinatario').value = email;
         }
     </script>
 
