@@ -1,6 +1,6 @@
 :root {
-  --cor-padrao: rgb(102, 102, 240);
-  --cor-second: rgb(190, 46, 159);
+  --cor-padrao: #009668;
+  --cor-second: #4db6ac;
   --cor-efeito: rgba(102, 102, 240, 0.233);
 }
 
