@@ -85,7 +85,7 @@
                     <div class="card-body">
                         <h3 class="text-center card-title" style="color: var(--cor-padrao)">Sobre Nós</h3>
                         <p class="card-text text-center">
-                            Idealizada por <b>Kelton Fonseca</b> e <b>Marlon Henrque</b>, o Metazoa é uma plataforma
+                            Idealizada por <b>Kelton Fonseca</b> e <b>Marlon Henrique</b>, o Metazoa é uma plataforma
                             on-line que visa
                             interligar
                             os
@@ -124,7 +124,7 @@
             <div class="col-lg-6">
                 <div id="formContato" class="card">
                     <div class="card-body">
-                        <h2 style="color: var(--cor-padrao)">Formulário de Contato</h2>
+                        <h2 style="color: var(--cor-padrao)">Fale Conosco</h2>
                         <h6>Envie sugestões, reclamações, dúvidas ou agradecimentos.</h6>
                         </br>
                         <form>
@@ -149,7 +149,8 @@
                                     <input type="checkbox" id="lista"> Inscrever-me na newsletter
                                 </label>
                             </div>
-                            <button class="btn btn-color btn-block" type="submit" value="Enviar">Enviar</button>
+                            <button class="btn btn-color btn-block" type="submit" value="Enviar"
+                                onclick="enviarMensagem()">Enviar</button>
                         </form>
                     </div>
                 </div>
@@ -179,6 +180,11 @@
 
     <!-- API Google Maps -->
     <script>
+
+        function enviarMensagem() {
+            alert('Mensagem enviada com sucesso. Obrigado pelo contato!');
+        }
+
         function initMap() {
             var uluru = { lat: -19.932754, lng: -43.936008 };
             var map = new google.maps.Map(document.getElementById('map'), {
